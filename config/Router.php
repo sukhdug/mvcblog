@@ -6,7 +6,7 @@ class Router
 
     public function __construct()
     {
-        $routesPath = ROOT.'routes.php';
+        $routesPath = 'routes.php';
         $this->routes = include($routesPath);
     }
 
@@ -54,7 +54,7 @@ class Router
                 }
 
                 $controllerObject = new $controllerName;
-                /*$result = $controllerObject->$actionName($parameters); - OLD VERSION */
+                //$result = $controllerObject->$actionName($parameters);
                 /*$result = call_user_func(array($controllerObject, $actionName), $parameters);*/
                 $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 
