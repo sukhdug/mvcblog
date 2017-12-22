@@ -10,22 +10,21 @@ class Article
 {
 
     /** Returns single news items with specified id
-     * @param integer &id
+     * @rapam integer &id
      */
-    public static function getNewsItemByID($id)
+    public static function getArticlesItemByID($id)
     {
         $id = intval($id);
 
         if ($id) {
             $db = Database::getConnection();
-            $result = $db->query('SELECT * FROM news WHERE id=' . $id);
+            $result = $db->query('SELECT * FROM articles WHERE id=' . $id);
 
-            /*$result->setFetchMode(PDO::FETCH_NUM);*/
             $result->setFetchMode(PDO::FETCH_ASSOC);
 
-            $newsItem = $result->fetch();
+            $articlesItem = $result->fetch();
 
-            return $newsItem;
+            return $articlesItem;
         }
 
     }
@@ -33,24 +32,24 @@ class Article
     /**
      * Returns an array of news items
      */
-    public static function getNewsList() {
+    public static function getArticlesList() {
 
         $db = Database::getConnection();
-        $newsList = array();
+        $articlesList = array();
 
-        $result = $db->query('SELECT id, title, date, author_name, short_content FROM news ORDER BY id ASC LIMIT 10');
+        $result = $db->query('SELECT id, title, body, author_id, like_count  FROM articles ORDER BY id ASC LIMIT 10');
 
         $i = 0;
         while($row = $result->fetch()) {
-            $newsList[$i]['id'] = $row['id'];
-            $newsList[$i]['title'] = $row['title'];
-            $newsList[$i]['date'] = $row['date'];
-            $newsList[$i]['author_name'] = $row['author_name'];
-            $newsList[$i]['short_content'] = $row['short_content'];
+            $articlesList[$i]['id'] = $row['id'];
+            $articlesList[$i]['title'] = $row['title'];
+            $articlesList[$i]['body'] = $row['body'];
+            $articlesList[$i]['author_id'] = $row['author_id'];
+            $articlesList[$i]['like_count'] = $row['like_count'];
             $i++;
         }
 
-        return $newsList;
+        return $articlesList;
 
     }
 }
