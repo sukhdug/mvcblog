@@ -1,9 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: handy
- * Date: 23.12.17
- * Time: 0:17
- */
-
-echo "Hello";
+<?php foreach($articlesList as $articleItem){?>
+    <h1><?= $articleItem['title']; ?></h1>
+    <p><?= $articleItem['body']; ?></p>
+<?php } ?>
