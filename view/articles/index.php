@@ -1,4 +1,4 @@
 <?php foreach($articlesList as $articleItem){?>
-    <h1><?= $articleItem['title']; ?></h1>
+    <h1><a href="/articles/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
     <p><?= $articleItem['body']; ?></p>
 <?php } ?>
