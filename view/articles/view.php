@@ -1,7 +1,2 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: handy
- * Date: 23.12.17
- * Time: 0:17
- */
+<h1><?= $articlesItem['title']; ?></h1>
+<p><?= $articlesItem['body']; ?></p>

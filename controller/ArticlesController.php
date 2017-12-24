@@ -21,7 +21,7 @@ class ArticlesController
 
             $articlesItem = Article::getArticlesItemByID($id);
 
-            require_once(ROOT . '/view/aricles/view.php');
+            require_once(ROOT . '/view/articles/view.php');
 
         }
 
