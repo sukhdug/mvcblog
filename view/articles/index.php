@@ -1,7 +1,6 @@
+<?php require_once(ROOT . '/view/layout.php'); ?>
 <html>
     <head>
-        <link href="/template/css/bootstrap.css" rel="stylesheet" type="text/css" media="screen" />
-        <link href="/template/css/font-awesome.css" rel="stylesheet" type="text/css" media="screen" />
         <title>Главная страница</title>
     </head>
     <body>
