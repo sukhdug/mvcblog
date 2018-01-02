@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <?php foreach($articlesList as $articleItem){?>
-                    <h1><i class="fa fa-address-book"></i>
+                    <h1><i class="fa fa-pencil-square"></i>
                         <a href="/articles/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
                     <p><?= $articleItem['body']; ?></p>
                 <?php } ?>

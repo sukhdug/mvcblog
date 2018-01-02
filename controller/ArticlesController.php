@@ -1,6 +1,7 @@
 <?php
 
 include_once ROOT. '/model/Article.php';
+include_once ROOT. '/model/Comment.php';
 
 class ArticlesController
 {
@@ -20,6 +21,7 @@ class ArticlesController
         if ($id) {
 
             $articlesItem = Article::getArticlesItemByID($id);
+            $commentsList = Comment::getCommentsList($id);
 
             require_once(ROOT . '/view/articles/view.php');
 

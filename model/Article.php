@@ -9,7 +9,7 @@
 class Article
 {
 
-    /** Returns single news items with specified id
+    /** Returns single articles items with specified id
      * @rapam integer &id
      */
     public static function getArticlesItemByID($id)
@@ -30,7 +30,7 @@ class Article
     }
 
     /**
-     * Returns an array of news items
+     * Returns an array of articles items
      */
     public static function getArticlesList() {
 
