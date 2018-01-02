@@ -8,6 +8,8 @@
             <div class="row">
                 <h1><?= $articlesItem['title']; ?></h1>
                 <p><?= $articlesItem['body']; ?></p>
+                <p>Author: <?= $articlesItem['author']; ?></p>
+                <p><i class="fa fa-heart"></i> <?= $articlesItem['like_count']; ?></p>
                 <h1>Комментарии</h1>
                 <?php foreach($commentsList as $commentItem){?>
                     <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
