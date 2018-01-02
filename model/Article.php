@@ -37,7 +37,7 @@ class Article
         $db = Database::getConnection();
         $articlesList = array();
 
-        $result = $db->query('SELECT id, title, author, body, like_count  FROM articles ORDER BY id ASC LIMIT 10');
+        $result = $db->query('SELECT id, title, author, body, short_content, like_count  FROM articles ORDER BY id ASC LIMIT 10');
 
         $i = 0;
         while($row = $result->fetch()) {
@@ -45,6 +45,7 @@ class Article
             $articlesList[$i]['title'] = $row['title'];
             $articlesList[$i]['author'] = $row['author'];
             $articlesList[$i]['body'] = $row['body'];
+            $articlesList[$i]['short_content'] = $row['short_content'];
             $articlesList[$i]['like_count'] = $row['like_count'];
             $i++;
         }
