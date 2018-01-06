@@ -15,6 +15,19 @@
                     <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
                     <p><?= $commentItem['body']; ?></p>
                 <?php } ?>
+                <h1>Оставьте комментарий</h1>
+                <form   name="AddUser"
+                        method="POST"
+                        action="php/add.php">
+                    <div class="form-group">
+                        <label for="inputAuthor">Автор</label>
+                        <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBody">Комментарий</label>
+                        <textarea class="form-control" id="body" rows="5"></textarea>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
