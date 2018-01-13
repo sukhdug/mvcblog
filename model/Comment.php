@@ -18,7 +18,8 @@ class Comment
 
             $db = Database::getConnection();
             $commentsList = array();
-            $result = $db->query('SELECT id, body, author FROM comments WHERE article_id=' . $article_id);
+            $sql = 'SELECT id, body, author FROM comments WHERE article_id=' . $article_id;
+            $result = $db->query($sql);
 
             $i = 0;
             while($row = $result->fetch()) {
@@ -28,6 +29,21 @@ class Comment
                 $i++;
             }
             return $commentsList;
+        }
+    }
+
+    /**
+     *
+     */
+    public static function addCommentForArticle($author, $comment, $article_id){
+
+        if (isset($author) && isset($comment) && isset($article_id)) {
+
+            $db = Database::getConnection();
+            $sql = "INSERT INTO comments (body, author, article_id) VALUES ('$comment', '$author', '$article_id')";
+            $result = $db->query($sql);
+
+            return $result->execute();
         }
     }
 }

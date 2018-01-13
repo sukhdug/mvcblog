@@ -18,6 +18,7 @@ class ArticlesController
 
     public function actionView($id)
     {
+        $id = intval($id);
         if ($id) {
 
             $articlesItem = Article::getArticlesItemByID($id);
@@ -25,6 +26,11 @@ class ArticlesController
 
             require_once(ROOT . '/view/articles/view.php');
 
+        }
+        if (isset($_POST['submit'])) {
+
+            $d = Comment::addCommentForArticle($_POST['inputAuthor'], $_POST['inputComment'], $id);
+            echo $d;
         }
 
         return true;

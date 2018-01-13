@@ -16,16 +16,18 @@
                     <p><?= $commentItem['body']; ?></p>
                 <?php } ?>
                 <h1>Оставьте комментарий</h1>
-                <form   name="AddUser"
-                        method="POST"
-                        action="php/add.php">
+                <form   name="AddComment"
+                        method="POST">
                     <div class="form-group">
                         <label for="inputAuthor">Автор</label>
-                        <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя">
+                        <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя" required>
                     </div>
                     <div class="form-group">
                         <label for="inputBody">Комментарий</label>
-                        <textarea class="form-control" id="body" rows="5"></textarea>
+                        <textarea name="inputComment" class="form-control" id="body" rows="5" placeholder="Напишите комментарий" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-primary" id="submit">Отправить</button>
                     </div>
                 </form>
             </div>
