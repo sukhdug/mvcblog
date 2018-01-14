@@ -12,16 +12,16 @@ class Article
     /** Returns single articles items with specified id
      * @rapam integer &id
      */
-    public static function getArticlesItemByID($id)
+    public function getArticlesItemByID($id)
     {
         $id = intval($id);
 
         if ($id) {
             $db = Database::getConnection();
-            $result = $db->query('SELECT * FROM articles WHERE id=' . $id);
-
+            $sql = 'SELECT * FROM articles WHERE id=' . $id;
+            $result = $db->prepare($sql);
+            $result->execute();
             $result->setFetchMode(PDO::FETCH_ASSOC);
-
             $articlesItem = $result->fetch();
 
             return $articlesItem;
@@ -32,12 +32,13 @@ class Article
     /**
      * Returns an array of articles items
      */
-    public static function getArticlesList() {
+    public function getArticlesList() {
 
         $db = Database::getConnection();
         $articlesList = array();
-
-        $result = $db->query('SELECT id, title, author, body, short_content, like_count  FROM articles ORDER BY id ASC LIMIT 10');
+        $sql = 'SELECT id, title, author, body, short_content, like_count  FROM articles ORDER BY id ASC LIMIT 10';
+        $result = $db->prepare($sql);
+        $result->execute();
 
         $i = 0;
         while($row = $result->fetch()) {

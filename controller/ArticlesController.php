@@ -7,9 +7,10 @@ class ArticlesController
 {
     public function actionIndex()
     {
+        $articleModel = new Article();
 
         $articlesList = array();
-        $articlesList = Article::getArticlesList();
+        $articlesList = $articleModel->getArticlesList();
 
         require_once(ROOT . '/view/articles/index.php');
 
@@ -18,18 +19,20 @@ class ArticlesController
 
     public function actionView($id)
     {
+        $commentModel = new Comment();
+        $articleModel = new Article();
         $id = intval($id);
         if ($id) {
 
-            $articlesItem = Article::getArticlesItemByID($id);
-            $commentsList = Comment::getCommentsList($id);
+            $articlesItem = $articleModel->getArticlesItemByID($id);
+            $commentsList = $commentModel->getCommentsList($id);
 
             require_once(ROOT . '/view/articles/view.php');
 
         }
         if (isset($_POST['submit'])) {
 
-            $d = Comment::addCommentForArticle($_POST['inputAuthor'], $_POST['inputComment'], $id);
+            $d = $commentModel->addCommentForArticle($_POST['inputAuthor'], $_POST['inputComment'], $id);
             echo $d;
         }
 
