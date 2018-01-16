@@ -12,8 +12,10 @@
                 <p><i class="fa fa-heart"></i> <?= $articlesItem['like_count']; ?></p>
                 <h1>Комментарии</h1>
                 <?php foreach($commentsList as $commentItem){?>
-                    <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
-                    <p><?= $commentItem['body']; ?></p>
+                    <div>
+                        <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
+                        <p><?= $commentItem['body']; ?></p>
+                    </div>
                 <?php } ?>
                 <h1>Оставьте комментарий</h1>
                 <form   name="AddComment"
