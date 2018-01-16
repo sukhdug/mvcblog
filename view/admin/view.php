@@ -9,7 +9,7 @@
         <h1><?= $articlesItem['title']; ?></h1>
         <p><?= $articlesItem['body']; ?></p>
         <p>Author: <?= $articlesItem['author']; ?> <i class="fa fa-heart"></i> <?= $articlesItem['like_count']; ?></p>
-        <p><button class="btn btn-primary">Редактировать</button>
+        <p><a href="/admin/article/edit/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Редактировать</button></a>
         <button class="btn btn-danger">Удалить</button></p>
         <h1>Комментарии</h1>
         <?php foreach($commentsList as $commentItem){?>

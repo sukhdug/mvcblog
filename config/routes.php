@@ -2,8 +2,9 @@
 
 return array(
 
+    'admin/article/edit/([0-9]+)' => 'admin/edit/$1',
     'admin/article/([0-9]+)' => 'admin/view/$1',
-    'articles/([0-9]+)' => 'articles/view/$1',
+    'article/([0-9]+)' => 'articles/view/$1',
     'articles' => 'articles/index',
     'admin' => 'admin/index',
     '' => 'articles/index'

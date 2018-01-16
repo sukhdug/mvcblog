@@ -8,7 +8,7 @@
             <div class="row">
                 <?php foreach($articlesList as $articleItem){?>
                     <h1><i class="fa fa-pencil-square"></i>
-                        <a href="/articles/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
+                        <a href="/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
                     <p>Author: <?= $articleItem['author']; ?></p>
                     <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
                     <p><a href="/articles/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>

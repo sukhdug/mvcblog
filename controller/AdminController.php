@@ -34,4 +34,18 @@ class AdminController
         return true;
     }
 
+    public function actionEdit($id)
+    {
+        $articleModel = new Article();
+        $id = intval($id);
+        if ($id) {
+
+            $articlesItem = $articleModel->getArticlesItemByID($id);
+
+            require_once(ROOT . '/view/admin/edit.php');
+
+        }
+
+        return true;
+    }
 }
