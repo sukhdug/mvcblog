@@ -46,6 +46,18 @@ class AdminController
 
         }
 
+        if (isset($_POST['submit'])) {
+
+            $article['title'] = $_POST['inputTitle'];
+            $article['author'] = $_POST['inputAuthor'];
+            $article['body'] = $_POST['inputBody'];
+            $article['id'] = $id;
+            $result = $articleModel->updateArticle($article);
+            if($result) {
+                echo "Success";
+            }
+        }
+
         return true;
     }
 }

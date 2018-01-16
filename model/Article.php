@@ -9,7 +9,8 @@
 class Article
 {
 
-    /** Returns single articles items with specified id
+    /**
+     * Returns single articles items with specified id
      * @rapam integer &id
      */
     public function getArticlesItemByID($id)
@@ -32,7 +33,8 @@ class Article
     /**
      * Returns an array of articles items
      */
-    public function getArticlesList() {
+    public function getArticlesList()
+    {
 
         $db = Database::getConnection();
         $articlesList = array();
@@ -54,4 +56,29 @@ class Article
         return $articlesList;
 
     }
+
+    /**
+     * Update single articles items with
+     */
+    public function updateArticle($article)
+    {
+
+        if(isset($article['author']) && isset($article['title']) && isset($article['body'])) {
+
+            $short_content = substr($article['body'], 0, 255);
+            $db = Database::getConnection();
+            $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content WHERE id = :id";
+            $result = $db->prepare($sql);
+            $result->bindParam(":id", intval($article['id']));
+            $result->bindParam(":title",$article['title']);
+            $result->bindParam(":author",$article['author']);
+            $result->bindParam(":body",$article['body']);
+            $result->bindParam(":short_content", $short_content);
+            $result = $result->execute();
+
+            return $result;
+        }
+
+    }
+
 }
