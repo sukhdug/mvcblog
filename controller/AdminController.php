@@ -67,6 +67,17 @@ class AdminController
 
         require_once(ROOT . '/view/admin/add.php');
 
+        if (isset($_POST['submit'])) {
+
+            $article['title'] = $_POST['inputTitle'];
+            $article['author'] = $_POST['inputAuthor'];
+            $article['body'] = $_POST['inputBody'];
+            $result = $articleModel->addArticle($article);
+            if($result) {
+                echo "Success";
+            }
+        }
+
         return true;
     }
 }

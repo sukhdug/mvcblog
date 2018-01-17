@@ -58,7 +58,29 @@ class Article
     }
 
     /**
-     * Update single articles items with
+     * Add single articles items to database
+     */
+    public function addArticle($article)
+    {
+        if(isset($article['author']) && isset($article['title']) && isset($article['body'])) {
+
+            $short_content = substr($article['body'], 0, 255);
+            $db = Database::getConnection();
+            $sql = "INSERT INTO articles (title, author, body, short_content, like_count) VALUES (:title, :author, :body, :short_content, 0)";
+            $result = $db->prepare($sql);
+            $result->bindParam(":title", $article['title']);
+            $result->bindParam(":author", $article['author']);
+            $result->bindParam(":body", $article['body']);
+            $result->bindParam(":short_content", $short_content);
+            $result = $result->execute();
+
+            return $result;
+        }
+
+    }
+
+    /**
+     * Update single articles items to database
      */
     public function updateArticle($article)
     {
