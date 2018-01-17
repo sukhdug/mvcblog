@@ -24,5 +24,11 @@
             </p>
             <a href="/admin/article/add"><button class="btn btn-primary">Добавить статью</button></a>
         </div>
+        <div class="container">
+            <hr>
+            <footer>
+                <p>&copy; Ханды-Сурун 2018</p>
+            </footer>
+        </div>
     </body>
 </html>

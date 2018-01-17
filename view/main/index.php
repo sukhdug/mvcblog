@@ -52,13 +52,12 @@
                 <?php } ?>
                 <p><a class="btn btn-primary btn-lg" role="button" href="/articles">Все статьи</a></p>
             </div>
-
+        </div>
+        <div class="container">
             <hr>
-
             <footer>
                 <p>&copy; Ханды-Сурун 2018</p>
             </footer>
-
         </div>
     </body>
 </html>
