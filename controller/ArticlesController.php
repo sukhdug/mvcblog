@@ -14,14 +14,14 @@ class ArticlesController
             $page = addslashes(strip_tags(trim($p)));
             if($page < 1) $page = 1;
         }
-        $num_elements = 2; // эта переменная хранит количество выводимых статей в одной странице
+        $max_elements = 5; // эта переменная хранит количество выводимых статей в одной странице
         $total = $articleModel->countArticles(); // общее количество статей
-        $num_pages = ceil($total / $num_elements);
+        $num_pages = ceil($total / $max_elements);
         if ($page > $num_pages) $page = $num_pages;
-        $start = ($page - 1) * $num_elements; // Стартовая позиция выборки из БД
+        $start = ($page - 1) * $max_elements; // Стартовая позиция выборки из БД
 
         $articlesList = array();
-        $articlesList = $articleModel->getArticlesList($start, $num_elements);
+        $articlesList = $articleModel->getArticlesList($start, $max_elements);
         $pagination = $this->pagination($page, $num_pages);
 
         require_once(ROOT . '/view/articles/index.php');
@@ -52,27 +52,26 @@ class ArticlesController
 
     }
 
-    private function pagination($p, $num_pages)
+    private function pagination($page, $num_pages)
     {
-        //Check whether the link "first"
-        if ($p > 2) $first_page = ' <a href="/articles/page/1"><<</a> ';
+        if ($page > 2) $first_page = '<li><a href="/articles/page/1"><<</a></li>';
         else $first_page = '';
-        if ($p < ($num_pages - 1)) $last_page = ' <a href="/articles/page/'.$num_pages.'">>></a> ';
+        if ($page < ($num_pages - 1)) $last_page = '<li><a href="/articles/page/'.$num_pages.'">>></a></li>';
         else $last_page = '';
-        if ($p > 1) $prev_page = ' <a href="/articles/page/'.($p - 1).'"><</a> ';
+        if ($page > 1) $prev_page = '<li><a href="/articles/page/'.($page - 1).'"><</a></li>';
         else $prev_page = '';
-        if ($p < $num_pages) $next_page = ' <a href="/articles/page/'.($p + 1).'">></a> ';
+        if ($page < $num_pages) $next_page = '<li><a href="/articles/page/'.($page + 1).'">></a></li>';
         else $next_page = '';
-        if ($p - 2 > 0) $prev_2_page = ' <a href="/articles/page/'.($p - 2).'">'.($p - 2).'</a> ';
+        if ($page - 2 > 0) $prev_2_page = '<li><a href="/articles/page/'.($page - 2).'">'.($page - 2).'</a></li>';
         else $prev_2_page = '';
-        if ($p - 1 > 0) $prev_1_page = ' <a href="/articles/page/'.($p - 1).'"> '.($p - 1).' </a> ';
+        if ($page - 1 > 0) $prev_1_page = '<li><a href="/articles/page/'.($page - 1).'"> '.($page - 1).' </a></li>';
         else $prev_1_page = '';
-        if ($p + 2 <= $num_pages) $next_2_page = ' <a href="/articles/page/'.($p + 2).'"> '.($p + 2).' </a> ';
+        if ($page + 2 <= $num_pages) $next_2_page = '<li><a href="/articles/page/'.($page + 2).'"> '.($page + 2).' </a></li>';
         else $next_2_page = '';
-        if ($p + 1 <= $num_pages) $next_1_page = ' <a href="/articles/page/'.($p + 1).'">'.($p + 1).'</a> ';
+        if ($page + 1 <= $num_pages) $next_1_page = '<li><a href="/articles/page/'.($page + 1).'">'.($page + 1).'</a></li>';
         else $next_1_page = '';
 
-        $pagination = $first_page.$prev_page.$prev_2_page.$prev_1_page.$p.$next_1_page.$next_2_page.$next_page.$last_page;
+        $pagination = $first_page.$prev_page.$prev_2_page.$prev_1_page.'<li class="active"><a href="#">'.$page.'</a></li>'.$next_1_page.$next_2_page.$next_page.$last_page;
 
         return $pagination;
 

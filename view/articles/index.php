@@ -42,7 +42,11 @@
                     <p><a href="/articles/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>
                     <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
                 <?php } ?>
-            <p class="centered"><?= $pagination; ?></p>
+                <p class="centered">
+                    <ul class="pagination">
+                        <?= $pagination; ?>
+                    </ul>
+                </p>
             </div>
         </div>
     </body>
