@@ -15,4 +15,11 @@ class MainController
 
         return true;
     }
+
+    public function actionAbout()
+    {
+        require_once(ROOT . '/view/main/about.php');
+
+        return true;
+    }
 }

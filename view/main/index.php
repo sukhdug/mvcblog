@@ -24,7 +24,7 @@
                                 <li><a href="#">Популярные</a></li>
                             </ul>
                         </li>
-                        <li><a href="#contact">О проекте</a></li>
+                        <li><a href="/about">О проекте</a></li>
                         <li><a href="#contact">Контакты</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -38,6 +38,7 @@
                 <div class="jumbotron">
                     <h1 class="centered">О проекте</h1>
                     <p class="centered">Этот блог создается с помощью паттерна MVC с целью изучения данного паттерна.</p>
+                    <p class="centered"><a class="btn btn-primary btn-lg" role="button" href="/about">Узнать больше</a></p>
                 </div>
                 <?php foreach($articlesList as $articleItem){?>
                     <h1><i class="fa fa-pencil-square"></i>
