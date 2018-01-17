@@ -4,19 +4,20 @@
         <title>admin panel</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <h1 class="centered">Admin panel</h1>
-                <div class="col-xs-10 col-md-4 col-sm-6">
-                    <?php foreach($articlesList as $articleItem){?>
+                <?php foreach($articlesList as $articleItem){?>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
                         <h1><a href="/admin/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
                         <p>Author: <?= $articleItem['author']; ?></p>
                         <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
                         <p><a href="/admin/article/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>
                         <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
-                    <?php } ?>
-                </div>
+                    </div>
+                <?php } ?>
             </div>
+            <a href="/admin/article/add"><button class="btn btn-primary">Добавить статью</button></a>
         </div>
     </body>
 </html>
