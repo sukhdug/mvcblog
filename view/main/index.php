@@ -40,14 +40,17 @@
                     <p class="centered">Этот блог создается с помощью паттерна MVC с целью изучения данного паттерна.</p>
                     <p class="centered"><a class="btn btn-primary btn-lg" role="button" href="/about">Узнать больше</a></p>
                 </div>
-                <?php foreach($articlesList as $articleItem){?>
-                    <h1><i class="fa fa-pencil-square"></i>
-                        <a href="/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
-                    <p>Author: <?= $articleItem['author']; ?></p>
-                    <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
-                    <p><a href="/articles/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>
-                    <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
+                <?php if($articlesList){?>
+                    <?php foreach($articlesList as $articleItem){?>
+                        <h1><i class="fa fa-pencil-square"></i>
+                            <a href="/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
+                        <p>Author: <?= $articleItem['author']; ?></p>
+                        <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
+                        <p><a href="/articles/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>
+                        <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
+                    <?php } ?>
                 <?php } ?>
+                <p class="centered"><?= $pagination; ?></p>
             </div>
 
             <hr>

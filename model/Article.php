@@ -33,13 +33,15 @@ class Article
     /**
      * Returns an array of articles items
      */
-    public function getArticlesList()
+    public function getArticlesList($min, $max)
     {
 
         $db = Database::getConnection();
         $articlesList = array();
-        $sql = 'SELECT id, title, author, body, short_content, like_count  FROM articles ORDER BY id ASC LIMIT 10';
+        $sql = 'SELECT * FROM articles ORDER BY id ASC LIMIT ?, ?';
         $result = $db->prepare($sql);
+        $result->bindValue(1, $min, PDO::PARAM_INT);
+        $result->bindValue(2, $max, PDO::PARAM_INT);
         $result->execute();
 
         $i = 0;
@@ -76,7 +78,6 @@ class Article
 
             return $result;
         }
-
     }
 
     /**
@@ -100,7 +101,17 @@ class Article
 
             return $result;
         }
-
     }
 
+    public function countArticles()
+    {
+        $db = Database::getConnection();
+        $sql = "SELECT COUNT(*) FROM articles";
+        $sth = $db->prepare($sql);
+        $sth->execute();
+        $row = $sth->fetch();
+        $total = $row[0];
+        return $total;
+
+    }
 }
