@@ -50,7 +50,7 @@
                         <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
                     <?php } ?>
                 <?php } ?>
-                <p class="centered"><?= $pagination; ?></p>
+                <p><a class="btn btn-primary btn-lg" role="button" href="/articles">Все статьи</a></p>
             </div>
 
             <hr>
