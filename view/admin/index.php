@@ -8,7 +8,7 @@
             <div class="row">
                 <h1 class="centered">Admin panel</h1>
                 <?php foreach($articlesList as $articleItem){?>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4">
                         <h1><a href="/admin/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
                         <p>Author: <?= $articleItem['author']; ?></p>
                         <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
