@@ -49,6 +49,13 @@
                     <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
                 <?php } ?>
             </div>
+
+            <hr>
+
+            <footer>
+                <p>&copy; Ханды-Сурун 2018</p>
+            </footer>
+
         </div>
     </body>
 </html>
