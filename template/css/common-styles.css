@@ -4,3 +4,7 @@ body {
 .centered {
     text-align: center;
 }
+.jumbotron {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

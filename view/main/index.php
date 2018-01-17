@@ -17,8 +17,8 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/">Главная</a></li>
-                        <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Статьи <span class="caret"></span></a>
+                        <li class="active"><a href="/">Главная</a></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Статьи <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/articles">Новые</a></li>
                                 <li><a href="#">Популярные</a></li>
@@ -34,6 +34,11 @@
             </div>
         </div>
         <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="centered">О проекте</h1>
+                    <p class="centered">Этот блог создается с помощью паттерна MVC с целью изучения данного паттерна.</p>
+                </div>
                 <?php foreach($articlesList as $articleItem){?>
                     <h1><i class="fa fa-pencil-square"></i>
                         <a href="/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
