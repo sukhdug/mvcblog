@@ -34,6 +34,7 @@
             </div>
         </div>
         <div class="container">
+            <div class="row">
                 <?php foreach($articlesList as $articleItem){?>
                     <h1><i class="fa fa-pencil-square"></i>
                         <a href="/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
@@ -42,11 +43,11 @@
                     <p><a href="/articles/<?= $articleItem['id'] ?>">Показать полностью</a></p><br>
                     <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
                 <?php } ?>
-                <p class="centered">
+                <div class="centered">
                     <ul class="pagination">
                         <?= $pagination; ?>
                     </ul>
-                </p>
+                </div>
             </div>
         </div>
     </body>

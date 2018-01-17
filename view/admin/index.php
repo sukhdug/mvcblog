@@ -17,6 +17,11 @@
                     </div>
                 <?php } ?>
             </div>
+            <p class="centered">
+                <ul class="pagination">
+                    <?= $pagination; ?>
+                </ul>
+            </p>
             <a href="/admin/article/add"><button class="btn btn-primary">Добавить статью</button></a>
         </div>
     </body>
