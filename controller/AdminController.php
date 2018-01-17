@@ -60,4 +60,13 @@ class AdminController
 
         return true;
     }
+
+    public function actionAdd()
+    {
+        $articleModel = new Article();
+
+        require_once(ROOT . '/view/admin/add.php');
+
+        return true;
+    }
 }

@@ -4,7 +4,7 @@
         <title>admin panel</title>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <h1 class="centered">Admin panel</h1>
                 <?php foreach($articlesList as $articleItem){?>
