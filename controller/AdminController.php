@@ -2,6 +2,7 @@
 
 include_once ROOT. '/model/Article.php';
 include_once ROOT. '/model/Comment.php';
+include_once ROOT. '/config/session.php';
 
 class AdminController
 {

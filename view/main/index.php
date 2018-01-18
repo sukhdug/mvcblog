@@ -28,7 +28,18 @@
                         <li><a href="/contacts">Контакты</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/login">Войти</a></li>
+                        <?php if (isset($_SESSION['logged'])): ?>
+                            <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Привет, <?= $_SESSION['logged']['login']; ?>!</a>
+                                <ul class="dropdown-menu">
+                                    <?php if ($_SESSION['logged']['admin']): ?>
+                                        <li><a href="/admin">Администрирование</a></li>
+                                    <?php endif; ?>
+                                    <li><a href="">Выйти</a></li>
+                                </ul>
+                            </li>
+                        <?php else: ?>
+                            <li><a href="/login">Войти</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>

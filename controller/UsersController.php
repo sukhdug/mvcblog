@@ -1,6 +1,7 @@
 <?php
 
 include_once ROOT. '/model/User.php';
+include_once ROOT. '/config/session.php';
 
 class UsersController
 {
@@ -47,6 +48,21 @@ class UsersController
 
     public function actionLogin()
     {
+        $userModel = new User();
+        $result = array();
+        $user = [
+            'login' => '',
+            'password' => ''
+        ];
+
+        if (isset($_POST['submit'])) {
+
+            $user['login'] = $_POST['inputLogin'];
+            $user ['password'] = $_POST['inputPassword'];
+
+            $result = $userModel->login($user);
+        }
+
         require_once(ROOT . '/view/users/login.php');
 
         return true;
