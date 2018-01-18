@@ -10,6 +10,8 @@ return array(
     'articles' => 'articles/index/$1',
     'about' => 'main/about',
     'contacts' => 'main/contact',
+    'signup' => 'users/signup',
+    'login' => 'users/login',
     'admin' => 'admin/index',
     '' => 'main/index'
 

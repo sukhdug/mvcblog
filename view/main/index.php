@@ -28,7 +28,7 @@
                         <li><a href="/contacts">Контакты</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">Войти</a></li>
+                        <li><a href="/login">Войти</a></li>
                     </ul>
                 </div>
             </div>
