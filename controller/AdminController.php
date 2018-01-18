@@ -25,7 +25,14 @@ class AdminController
         $articlesList = $articleModel->getArticlesList($start, $max_elements);
         $pagination = $this->pagination($page, $num_pages);
 
-        require_once(ROOT . '/view/admin/index.php');
+        if (isset($_SESSION['logged'])) {
+
+            require_once(ROOT . '/view/admin/index.php');
+
+        } else {
+
+            header('Location: /login');
+        }
 
         return true;
     }
@@ -40,7 +47,14 @@ class AdminController
             $articlesItem = $articleModel->getArticlesItemByID($id);
             $commentsList = $commentModel->getCommentsList($id);
 
-            require_once(ROOT . '/view/admin/view.php');
+            if (isset($_SESSION['logged'])) {
+
+                require_once(ROOT . '/view/admin/view.php');
+
+            } else {
+
+                header('Location: /login');
+            }
 
         }
 
@@ -55,7 +69,14 @@ class AdminController
 
             $articlesItem = $articleModel->getArticlesItemByID($id);
 
-            require_once(ROOT . '/view/admin/edit.php');
+            if (isset($_SESSION['logged'])) {
+
+                require_once(ROOT . '/view/admin/edit.php');
+
+            } else {
+
+                header('Location: /login');
+            }
 
         }
 
@@ -78,8 +99,6 @@ class AdminController
     {
         $articleModel = new Article();
 
-        require_once(ROOT . '/view/admin/add.php');
-
         if (isset($_POST['submit'])) {
 
             $article['title'] = $_POST['inputTitle'];
@@ -91,6 +110,14 @@ class AdminController
             }
         }
 
+        if (isset($_SESSION['logged'])) {
+
+            require_once(ROOT . '/view/admin/add.php');
+
+        } else {
+
+            header('Location: /login');
+        }
         return true;
     }
 
