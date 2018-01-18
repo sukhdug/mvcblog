@@ -9,6 +9,7 @@ return array(
     'article/([0-9]+)' => 'articles/view/$1',
     'articles' => 'articles/index/$1',
     'about' => 'main/about',
+    'contacts' => 'main/contact',
     'admin' => 'admin/index',
     '' => 'main/index'
 

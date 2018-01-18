@@ -24,8 +24,8 @@
                                 <li><a href="#">Популярные</a></li>
                             </ul>
                         </li>
-                        <li><a href="#contact">О проекте</a></li>
-                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="/about">О проекте</a></li>
+                        <li><a href="/contacts">Контакты</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="">Войти</a></li>

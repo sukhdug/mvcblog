@@ -31,4 +31,11 @@ class MainController
 
         return true;
     }
+
+    public function actionContact()
+    {
+        require_once(ROOT . '/view/main/contact.php');
+
+        return true;
+    }
 }

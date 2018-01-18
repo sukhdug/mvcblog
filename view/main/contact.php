@@ -1,7 +1,7 @@
 <?php require_once(ROOT . '/view/layout.php'); ?>
 <html>
 <head>
-    <title>О проекте</title>
+    <title>Контакты</title>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -24,8 +24,8 @@
                             <li><a href="#">Популярные</a></li>
                         </ul>
                     </li>
-                    <li class="active"><a href="#">О проекте</a></li>
-                    <li><a href="/contacts">Контакты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                    <li class="active"><a href="#">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="">Войти</a></li>
@@ -36,8 +36,12 @@
     <div class="container">
         <div class="row">
             <div class="jumbotron">
-                <h1 class="centered">О проекте</h1>
-                <p class="centered">Этот блог создается с помощью паттерна MVC с целью изучения данного паттерна.</p>
+                <h1 class="centered">Все контакты</h1>
+                <p class="centered">
+                    <a href="https://github.com/sukhdug"><i class="fa fa-github-square" aria-hidden="true"></i> GitHub</a> |
+                    <a href="https://vk.com/sukhdug"><i class="fa fa-vk" aria-hidden="true"></i> Вконтакте</a> | 
+                    <a href="https://instagram.com/sukhdug"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                </p>
             </div>
         </div>
     </div>

@@ -8,3 +8,13 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+a {
+    color: #444444;
+}
+
+A:hover, A:focus {
+    color: #2e6da4;
+    text-decoration: none;
+
+}

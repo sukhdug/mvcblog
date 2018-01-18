@@ -17,7 +17,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Главная</a></li>
+                        <li class="active"><a href="#">Главная</a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Статьи <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/articles">Новые</a></li>
@@ -25,7 +25,7 @@
                             </ul>
                         </li>
                         <li><a href="/about">О проекте</a></li>
-                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="/contacts">Контакты</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="">Войти</a></li>
