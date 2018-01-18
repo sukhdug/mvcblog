@@ -12,6 +12,7 @@ return array(
     'contacts' => 'main/contact',
     'signup' => 'users/signup',
     'login' => 'users/login',
+    'logout' => 'users/logout',
     'admin' => 'admin/index',
     '' => 'main/index'
 

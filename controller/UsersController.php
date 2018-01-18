@@ -63,8 +63,30 @@ class UsersController
             $result = $userModel->login($user);
         }
 
-        require_once(ROOT . '/view/users/login.php');
+        if (isset($_SESSION['logged'])) {
+
+            header('Location: /');
+
+        }else {
+
+            require_once(ROOT . '/view/users/login.php');
+        }
 
         return true;
+    }
+
+    public function actionLogout()
+    {
+
+        if (isset($_SESSION['logged'])) {
+
+            unset($_SESSION['logged']);
+            header('Location: /');
+
+        } else {
+
+            header('Location: /login');
+        }
+
     }
 }

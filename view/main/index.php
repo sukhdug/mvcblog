@@ -34,7 +34,7 @@
                                     <?php if ($_SESSION['logged']['admin']): ?>
                                         <li><a href="/admin">Администрирование</a></li>
                                     <?php endif; ?>
-                                    <li><a href="">Выйти</a></li>
+                                    <li><a href="/logout">Выйти</a></li>
                                 </ul>
                             </li>
                         <?php else: ?>
