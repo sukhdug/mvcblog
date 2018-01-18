@@ -25,14 +25,9 @@ class AdminController
         $articlesList = $articleModel->getArticlesList($start, $max_elements);
         $pagination = $this->pagination($page, $num_pages);
 
-        if (isset($_SESSION['logged'])) {
-
-            require_once(ROOT . '/view/admin/index.php');
-
-        } else {
-
-            header('Location: /login');
-        }
+        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/index.php');
+        elseif (!$_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/notadmin.php');
+        else header('Location: /login');
 
         return true;
     }
@@ -47,14 +42,9 @@ class AdminController
             $articlesItem = $articleModel->getArticlesItemByID($id);
             $commentsList = $commentModel->getCommentsList($id);
 
-            if (isset($_SESSION['logged'])) {
-
-                require_once(ROOT . '/view/admin/view.php');
-
-            } else {
-
-                header('Location: /login');
-            }
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/view.php');
+            elseif (!$_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/notadmin.php');
+            else header('Location: /login');
 
         }
 
@@ -69,14 +59,9 @@ class AdminController
 
             $articlesItem = $articleModel->getArticlesItemByID($id);
 
-            if (isset($_SESSION['logged'])) {
-
-                require_once(ROOT . '/view/admin/edit.php');
-
-            } else {
-
-                header('Location: /login');
-            }
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/edit.php');
+            elseif (!$_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/notadmin.php');
+            else header('Location: /login');
 
         }
 
@@ -110,14 +95,10 @@ class AdminController
             }
         }
 
-        if (isset($_SESSION['logged'])) {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/add.php');
+        elseif (!$_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/notadmin.php');
+        else header('Location: /login');
 
-            require_once(ROOT . '/view/admin/add.php');
-
-        } else {
-
-            header('Location: /login');
-        }
         return true;
     }
 
