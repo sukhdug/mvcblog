@@ -35,20 +35,21 @@
     </div>
     <div class="container">
         <div class="row">
-            <h1 class="centered">Редактирование статьи</h1>
+            <h1>Редактирование статьи</h1>
+            <p class="text-left text-info" ><?= array_shift($result); ?></p>
             <form name="EditArticle"
                   method="POST">
                 <div class="form-group">
                     <label for="inputTitle">Заголовок статьи</label>
-                    <input type="text" name="inputTitle" class="form-control" id="title" placeholder="Введите заголовок" value="<?= $articlesItem['title']; ?>" required>
+                    <input type="text" name="inputTitle" class="form-control" id="title" placeholder="Введите заголовок" value="<?= $articlesItem['title']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="inputAuthor">Автор статьи</label>
-                    <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя автора" value="<?= $articlesItem['author']; ?>" required>
+                    <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя автора" value="<?= $articlesItem['author']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="inputBody">Содержание статьи</label>
-                    <textarea name="inputBody" class="form-control" id="body" rows="10" placeholder="Напишите содержание статьи" required><?= $articlesItem['body']; ?></textarea>
+                    <textarea name="inputBody" class="form-control" id="body" rows="10" placeholder="Напишите содержание статьи"><?= $articlesItem['body']; ?></textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-primary" id="submit">Сохранить</button>

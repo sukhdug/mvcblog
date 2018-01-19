@@ -62,21 +62,26 @@ class Article
     /**
      * Add single articles items to database
      */
-    public function addArticle($article)
+    public function insertArticle($article)
     {
-        if(isset($article['author']) && isset($article['title']) && isset($article['body'])) {
+        if(isset($article)) {
 
-            $short_content = substr($article['body'], 0, 255);
-            $db = Database::getConnection();
-            $sql = "INSERT INTO articles (title, author, body, short_content, like_count) VALUES (:title, :author, :body, :short_content, 0)";
-            $result = $db->prepare($sql);
-            $result->bindParam(":title", $article['title']);
-            $result->bindParam(":author", $article['author']);
-            $result->bindParam(":body", $article['body']);
-            $result->bindParam(":short_content", $short_content);
-            $result = $result->execute();
+            $errors = $this->validation($article);
 
-            return $result;
+            if (empty($errors)) {
+
+                $short_content = substr($article['body'], 0, 255);
+                $db = Database::getConnection();
+                $sql = "INSERT INTO articles (title, author, body, short_content, like_count) VALUES (:title, :author, :body, :short_content, 0)";
+                $result = $db->prepare($sql);
+                $result->bindParam(":title", $article['title']);
+                $result->bindParam(":author", $article['author']);
+                $result->bindParam(":body", $article['body']);
+                $result->bindParam(":short_content", $short_content);
+                if ($result->execute()) $errors[] = 'Статья успешно добавлена';
+            }
+
+            return $errors;
         }
     }
 
@@ -86,20 +91,25 @@ class Article
     public function updateArticle($article)
     {
 
-        if(isset($article['author']) && isset($article['title']) && isset($article['body'])) {
+        if(isset($article)) {
 
-            $short_content = substr($article['body'], 0, 255);
-            $db = Database::getConnection();
-            $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content WHERE id = :id";
-            $result = $db->prepare($sql);
-            $result->bindParam(":id", intval($article['id']));
-            $result->bindParam(":title",$article['title']);
-            $result->bindParam(":author",$article['author']);
-            $result->bindParam(":body",$article['body']);
-            $result->bindParam(":short_content", $short_content);
-            $result = $result->execute();
+            $errors = $this->validation($article);
 
-            return $result;
+            if (empty($errors)) {
+
+                $short_content = substr($article['body'], 0, 255);
+                $db = Database::getConnection();
+                $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content WHERE id = :id";
+                $result = $db->prepare($sql);
+                $result->bindParam(":id", $article['id'], PDO::PARAM_INT);
+                $result->bindParam(":title",$article['title']);
+                $result->bindParam(":author",$article['author']);
+                $result->bindParam(":body",$article['body']);
+                $result->bindParam(":short_content", $short_content);
+                if ($result->execute()) $errors[] = 'Статья успешно отредактирована';
+            }
+
+            return $errors;
         }
     }
 
@@ -113,5 +123,19 @@ class Article
         $total = $row[0];
         return $total;
 
+    }
+
+    private function validation($article)
+    {
+        $errors = array();
+
+        if (empty($article['title'])) $errors[] = 'Заголовок не заполнен';
+        if (empty($article['author'])) $errors[] = 'Имя автора не заполнено';
+        if (strlen($article['author']) < 1 && strlen($article['author']) > 255) $errors[] = 'Имя автора слишком длинное или короткое';
+        if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $article['author'])) $errors[] = 'Имя автора неопределенное';
+        if (empty($article['body'])) $errors[] = 'Статья пустая';
+        if (strlen($article['body']) < 100 && strlen($article['body']) > 10000) $errors[] = 'Статья слишком короткое или длинное';
+
+        return $errors;
     }
 }

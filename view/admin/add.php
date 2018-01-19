@@ -35,23 +35,24 @@
     </div>
     <div class="container">
         <div class="row">
-            <h1 class="centered">Добавить статью</h1>
+            <h1>Добавить статью</h1>
+            <p class="text-left text-info" ><?= array_shift($result); ?></p>
             <form name="AddArticle"
                   method="POST">
                 <div class="form-group">
                     <label for="inputTitle">Заголовок статьи</label>
-                    <input type="text" name="inputTitle" class="form-control" id="title" placeholder="Введите заголовок" required>
+                    <input type="text" name="inputTitle" class="form-control" id="title" placeholder="Введите заголовок" value="<?= $article['title']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="inputAuthor">Автор статьи</label>
-                    <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя автора" required>
+                    <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя автора" value="<?= $article['author']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="inputBody">Содержание статьи</label>
-                    <textarea name="inputBody" class="form-control" id="body" rows="10" placeholder="Напишите содержание статьи" required></textarea>
+                    <textarea name="inputBody" class="form-control" id="body" rows="10" placeholder="Напишите содержание статьи"><?= $article['body']; ?></textarea>
                 </div>
                 <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-primary" id="submit">Добавить</button>
+                    <button type="submit" name="submit" class="btn btn-primary" id="submit">Сохранить</button>
                 </div>
             </form>
         </div>

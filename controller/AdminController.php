@@ -55,6 +55,17 @@ class AdminController
     {
         $articleModel = new Article();
         $id = intval($id);
+        $result = array();
+
+        if (isset($_POST['submit'])) {
+
+            $article['title'] = $_POST['inputTitle'];
+            $article['author'] = $_POST['inputAuthor'];
+            $article['body'] = $_POST['inputBody'];
+            $article['id'] = $id;
+            $result = $articleModel->updateArticle($article);
+        }
+
         if ($id) {
 
             $articlesItem = $articleModel->getArticlesItemByID($id);
@@ -65,34 +76,25 @@ class AdminController
 
         }
 
-        if (isset($_POST['submit'])) {
-
-            $article['title'] = $_POST['inputTitle'];
-            $article['author'] = $_POST['inputAuthor'];
-            $article['body'] = $_POST['inputBody'];
-            $article['id'] = $id;
-            $result = $articleModel->updateArticle($article);
-            if($result) {
-                echo "Success";
-            }
-        }
-
         return true;
     }
 
     public function actionAdd()
     {
         $articleModel = new Article();
+        $result = array();
+        $article = [
+            'title' => '',
+            'author' => '',
+            'body' => ''
+        ];
 
         if (isset($_POST['submit'])) {
 
             $article['title'] = $_POST['inputTitle'];
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];
-            $result = $articleModel->addArticle($article);
-            if($result) {
-                echo "Success";
-            }
+            $result = $articleModel->insertArticle($article);
         }
 
         if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/add.php');
