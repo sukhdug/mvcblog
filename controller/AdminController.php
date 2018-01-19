@@ -6,7 +6,7 @@ include_once ROOT. '/config/session.php';
 
 class AdminController
 {
-    public function actionIndex()
+    public function actionIndex($p)
     {
         $articleModel = new Article();
 
@@ -15,7 +15,7 @@ class AdminController
             $page = addslashes(strip_tags(trim($p)));
             if($page < 1) $page = 1;
         }
-        $max_elements = 10; // эта переменная хранит количество выводимых статей в одной странице
+        $max_elements = 9; // эта переменная хранит количество выводимых статей в одной странице
         $total = $articleModel->countArticles(); // общее количество статей
         $num_pages = ceil($total / $max_elements);
         if ($page > $num_pages) $page = $num_pages;
@@ -104,21 +104,21 @@ class AdminController
 
     private function pagination($page, $num_pages)
     {
-        if ($page > 2) $first_page = '<li><a href="/articles/page/1"><<</a></li>';
+        if ($page > 2) $first_page = '<li><a href="/admin/page/1"><<</a></li>';
         else $first_page = '';
-        if ($page < ($num_pages - 1)) $last_page = '<li><a href="/articles/page/'.$num_pages.'">>></a></li>';
+        if ($page < ($num_pages - 1)) $last_page = '<li><a href="/admin/page/'.$num_pages.'">>></a></li>';
         else $last_page = '';
-        if ($page > 1) $prev_page = '<li><a href="/articles/page/'.($page - 1).'"><</a></li>';
+        if ($page > 1) $prev_page = '<li><a href="/admin/page/'.($page - 1).'"><</a></li>';
         else $prev_page = '';
-        if ($page < $num_pages) $next_page = '<li><a href="/articles/page/'.($page + 1).'">></a></li>';
+        if ($page < $num_pages) $next_page = '<li><a href="/admin/page/'.($page + 1).'">></a></li>';
         else $next_page = '';
-        if ($page - 2 > 0) $prev_2_page = '<li><a href="/articles/page/'.($page - 2).'">'.($page - 2).'</a></li>';
+        if ($page - 2 > 0) $prev_2_page = '<li><a href="/admin/page/'.($page - 2).'">'.($page - 2).'</a></li>';
         else $prev_2_page = '';
-        if ($page - 1 > 0) $prev_1_page = '<li><a href="/articles/page/'.($page - 1).'"> '.($page - 1).' </a></li>';
+        if ($page - 1 > 0) $prev_1_page = '<li><a href="/admin/page/'.($page - 1).'"> '.($page - 1).' </a></li>';
         else $prev_1_page = '';
-        if ($page + 2 <= $num_pages) $next_2_page = '<li><a href="/articles/page/'.($page + 2).'"> '.($page + 2).' </a></li>';
+        if ($page + 2 <= $num_pages) $next_2_page = '<li><a href="/admin/page/'.($page + 2).'"> '.($page + 2).' </a></li>';
         else $next_2_page = '';
-        if ($page + 1 <= $num_pages) $next_1_page = '<li><a href="/articles/page/'.($page + 1).'">'.($page + 1).'</a></li>';
+        if ($page + 1 <= $num_pages) $next_1_page = '<li><a href="/admin/page/'.($page + 1).'">'.($page + 1).'</a></li>';
         else $next_1_page = '';
 
         $pagination = $first_page.$prev_page.$prev_2_page.$prev_1_page.'<li class="active"><a href="#">'.$page.'</a></li>'.$next_1_page.$next_2_page.$next_page.$last_page;
