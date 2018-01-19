@@ -34,7 +34,21 @@ class ArticlesController
     {
         $commentModel = new Comment();
         $articleModel = new Article();
+        $result = array();
+        $comment = [
+            'comment' => '',
+            'author' => '',
+            'id' => 0
+        ];
         $id = intval($id);
+        if (isset($_POST['submit'])) {
+
+            $comment['comment'] = $_POST['inputComment'];
+            $comment['author'] = $_POST['inputAuthor'];
+            $comment['id'] = $id;
+            $result = $commentModel->addCommentForArticle($comment);
+        }
+
         if ($id) {
 
             $articlesItem = $articleModel->getArticlesItemByID($id);
@@ -42,11 +56,6 @@ class ArticlesController
 
             require_once(ROOT . '/view/articles/view.php');
 
-        }
-        if (isset($_POST['submit'])) {
-
-            $d = $commentModel->addCommentForArticle($_POST['inputAuthor'], $_POST['inputComment'], $id);
-            echo $d;
         }
 
         return true;

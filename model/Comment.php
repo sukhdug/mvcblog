@@ -8,17 +8,6 @@
  */
 class Comment
 {
-    public static function validation($body, $author, $article_id) {
-        if (empty($body) || empty($author) || empty($article_id)) return false;
-        if (strlen($author) < 1 && strlen($author) > 255) return false;
-        if (strlen($body) < 1 && strlen($body) > 1000) return false;
-        if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $author)) return false;
-        if (!is_int($article_id)) return false;
-
-        return true;
-
-    }
-
     /**
      * Returns an array of comments items
      */
@@ -47,22 +36,39 @@ class Comment
     /**
      *
      */
-    public function addCommentForArticle($author, $comment, $article_id){
+    public function addCommentForArticle($comment){
 
-        if (isset($author) && isset($comment) && isset($article_id)) {
+        if (isset($comment)) {
 
-            $validation = $this->validation($comment, $author, $article_id);
-            $db = Database::getConnection();
-            $sql = "INSERT INTO comments (body, author, article_id) VALUES ('$comment', '$author', '$article_id')";
+            $errors = $this->validation($comment);
 
-            if($validation) {
+            if(empty($errors)) {
+                $db = Database::getConnection();
+                $sql = "INSERT INTO comments (body, author, article_id) VALUES (:comment, :author, :article_id)";
                 $result = $db->prepare($sql);
-                $result = $result->execute();
-            } else {
-                $result = false;
+                $result->bindParam(":comment", $comment['comment']);
+                $result->bindParam(":author", $comment['author']);
+                $result->bindParam(":article_id", $comment['id']);
+                if($result->execute()) $errors[] = 'Комментарий добавлен!';
             }
 
-            return $result;
+            return $errors;
         }
+    }
+
+    public static function validation($comment) {
+
+        $errors = array();
+
+        if(empty($comment['author'])) $errors[] = 'Напишите автора комментария';
+        if(empty($comment['comment'])) $errors[] = 'Комментарий не написан';
+        if (strlen($comment['author']) < 1 && strlen($comment['author']) > 255) $errors[] = 'Имя автора слишком длинное или короткое';
+        if (strlen($comment['comment']) < 1 && strlen($comment['comment']) > 1000) $errors[] = 'Слишком длинный или короткий комментарий';
+        if (empty($comment['id'])) $errors[] = 'Статья неопределена';
+        if (!is_int($comment['id'])) $errors[] = 'Статья неопределена';
+        if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $comment['author'])) $errors[] = 'Имя автора неопределенное';
+
+        return $errors;
+
     }
 }

@@ -58,15 +58,16 @@
                     </div>
                 <?php } ?>
                 <h1>Оставьте комментарий</h1>
+                <p class="text-left text-info" ><?= array_shift($result); ?></p>
                 <form   name="AddComment"
                         method="POST">
                     <div class="form-group">
                         <label for="inputAuthor">Автор</label>
-                        <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя" required>
+                        <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя" value="<?= $comment['author']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="inputBody">Комментарий</label>
-                        <textarea name="inputComment" class="form-control" id="body" rows="5" placeholder="Напишите комментарий" required></textarea>
+                        <textarea name="inputComment" class="form-control" id="body" rows="5" placeholder="Напишите комментарий"><?= $comment['comment']; ?></textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-primary" id="submit">Отправить</button>
