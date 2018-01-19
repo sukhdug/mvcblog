@@ -8,7 +8,7 @@ class UsersController
     public function actionSignup()
     {
         $userModel = new User();
-        $result = '';
+        $result = array();
         $user = [
             'login' => '',
             'email' => '',
@@ -17,7 +17,6 @@ class UsersController
             'password' => '',
             'password2' => ''
         ];
-        $errors = array();
 
         if (isset($_POST['submit'])) {
 
@@ -28,17 +27,8 @@ class UsersController
             $user['password'] = $_POST['inputPassword'];
             $user['password2'] = $_POST['inputPassword2'];
 
-            if ($user['password'] == $user['password2']) {
+            $result = $userModel->addUser($user);
 
-                $result = $userModel->addUser($user);
-
-            } else {
-                 $errors['repeat_password'] = 'Повторный пароль введен неправильно';
-            }
-        }
-
-        if ($result) {
-            echo "Success";
         }
 
         require_once(ROOT . '/view/users/signup.php');
