@@ -17,7 +17,7 @@ class User
 
             $errors = $this->registrationValidation($user);
 
-            if(empty($errors)){
+            if (empty($errors)) {
                 $password = password_hash($user['password'], PASSWORD_DEFAULT);
                 $admin = 0;
                 $db = Database::getConnection();
@@ -40,31 +40,42 @@ class User
     {
         if (isset($user)) {
 
-            $result = array();
-            $db = Database::getConnection();
-            $sql = "SELECT login, password, admin FROM users where login= ? ";
-            $sth = $db->prepare($sql);
-            $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
-            $sth->execute();
-            $sth->setFetchMode(PDO::FETCH_ASSOC);
-            $userResult = $sth->fetch();
+            $errors = $this->authValidation($user);
 
-            if (!$userResult) {
+            if (empty($errors)) {
 
-                $result[] = 'Логин не найден';
-
-            } elseif (!password_verify($user['password'], $userResult['password'])) {
-
-                $result[] = 'Введен неверный пароль';
-
-            } else {
+                $db = Database::getConnection();
+                $sql = "SELECT login, password, admin FROM users where login= ? ";
+                $sth = $db->prepare($sql);
+                $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
+                $sth->execute();
+                $sth->setFetchMode(PDO::FETCH_ASSOC);
+                $userResult = $sth->fetch();
                 $_SESSION['logged'] = $userResult;
-                $result[] = 'Вы вошли';
             }
 
-            return $result;
+            return $errors;
 
         }
+    }
+
+    private function authValidation($user)
+    {
+        $errors = array();
+        $db = Database::getConnection();
+        $sql = "SELECT login, password FROM users where login= ? ";
+        $sth = $db->prepare($sql);
+        $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
+        $sth->execute();
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $loginResult = $sth->fetch();
+
+        if (empty($user['login'])) $errors[] = 'Логин не введен';
+        if (empty($user['password'])) $errors[] = 'Пароль не введен';
+        if (!$loginResult) $errors[] = 'Нет пользователя с таким логином';
+        if (!password_verify($user['password'], $loginResult['password'])) $errors[] = 'Неправильный пароль';
+
+        return $errors;
     }
 
     private function registrationValidation($user)

@@ -31,7 +31,8 @@ class UsersController
 
         }
 
-        require_once(ROOT . '/view/users/signup.php');
+        if (isset($_SESSION['logged'])) require_once(ROOT . '/view/users/logged.php');
+        else require_once(ROOT . '/view/users/signup.php');
 
         return true;
     }
