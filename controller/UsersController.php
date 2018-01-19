@@ -72,10 +72,9 @@ class UsersController
         if (isset($_SESSION['logged'])) {
 
             unset($_SESSION['logged']);
-            header('Location: /');
-
-        } else {
-
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+        }
+        if (!isset($_SESSION['logged'])) {
             header('Location: /login');
         }
 
