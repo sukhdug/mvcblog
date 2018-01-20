@@ -53,6 +53,8 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-primary" id="submit">Сохранить</button>
+                    <a href="/admin/article/<?= $articlesItem['id']; ?>" class="btn btn-default" role="button">К статье</a>
+                    <a href="/admin" class="btn btn-default" role="button">К списку</a>
                 </div>
             </form>
         </div>

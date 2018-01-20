@@ -39,7 +39,8 @@
             <p><?= $articlesItem['body']; ?></p>
             <p>Author: <?= $articlesItem['author']; ?> <i class="fa fa-heart"></i> <?= $articlesItem['like_count']; ?></p>
             <p><a href="/admin/article/edit/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Редактировать</button></a>
-            <button class="btn btn-danger">Удалить</button></p>
+                <a href="" class="btn btn-danger" role="button">Удалить</a>
+                <a href="/admin" class="btn btn-default" role="button">К списку</a></p>
             <h1>Комментарии</h1>
             <?php foreach($commentsList as $commentItem){?>
                 <div>
