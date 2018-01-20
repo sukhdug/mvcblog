@@ -7,7 +7,7 @@ return array(
     'admin/article/add' => 'admin/add',
     'admin/page/([0-9]+)' => 'admin/index/$1',
     'articles/page/([0-9]+)' => 'articles/index/$1',
-    'article/([0-9]+)' => 'articles/view/$1',
+    'articles/([0-9]+)' => 'articles/view/$1',
     'articles' => 'articles/index/$1',
     'about' => 'main/about',
     'contacts' => 'main/contact',

@@ -54,10 +54,10 @@ class ArticlesController
             $articlesItem = $articleModel->getArticlesItemByID($id);
             $commentsList = $commentModel->getCommentsList($id);
 
-            require_once(ROOT . '/view/articles/view.php');
+            if ($articlesItem) require_once(ROOT . '/view/articles/view.php');
+            else require_once(ROOT . '/view/errors/noarticle.php');
 
         }
-
         return true;
 
     }
