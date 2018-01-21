@@ -94,8 +94,8 @@ class User
         if (empty($user['surname'])) $errors[] = 'Фамилия не введена';
         if (empty($user['email'])) $errors[] = 'Email не введен';
         if (empty($user['login'])) $errors[] = 'Логин не введен';
-        if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $user['name'])) $errors[] = 'Некорректное имя';
-        if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $user['surname'])) $errors[] = 'Некорректная фамилия';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['name'])) $errors[] = 'Некорректное имя';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['surname'])) $errors[] = 'Некорректная фамилия';
         if (empty($user['password'])) $errors[] = 'Пароль пустой';
         if (empty($user['password2'])) $errors[] = 'Пароль снова не введен';
         if ($user['password'] != $user['password2']) $errors[] = 'Пароль снова введен неправильный';

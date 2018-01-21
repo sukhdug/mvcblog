@@ -2,6 +2,7 @@
 
 return array(
 
+    'admin/article/delete/([0-9]+)' => 'admin/delete/$1',
     'admin/article/edit/([0-9]+)' => 'admin/edit/$1',
     'admin/article/([0-9]+)' => 'admin/view/$1',
     'admin/article/add' => 'admin/add',

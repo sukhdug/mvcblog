@@ -35,19 +35,19 @@
     </div>
     <div class="container">
         <div class="row">
-            <h1><?= $articlesItem['title']; ?></h1>
-            <p><?= $articlesItem['body']; ?></p>
-            <p>Author: <?= $articlesItem['author']; ?> <i class="fa fa-heart"></i> <?= $articlesItem['like_count']; ?></p>
-            <p><a href="/admin/article/edit/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Редактировать</button></a>
-                <a href="/admin/article/delete/<?= $articlesItem['id'] ?>" class="btn btn-danger" role="button">Удалить</a>
-                <a href="/admin" class="btn btn-default" role="button">К списку</a></p>
-            <h1>Комментарии</h1>
-            <?php foreach($commentsList as $commentItem){?>
-                <div>
-                    <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
-                    <p><?= $commentItem['body']; ?></p>
-                </div>
-            <?php } ?>
+            <?php if($result == 0): ?>
+                <h1><?= $articlesItem['title']; ?></h1>
+                <p><?= $articlesItem['author']; ?></p>
+                <p><?= $articlesItem['body']; ?></p>
+                <h2 class="text-center text-danger">Вы действительно хотите удалить эту статью?</h2>
+                <p class="centered"><a href="/admin/article/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Вернуться</button></a></p>
+                <form method="POST" class="centered">
+                        <button class="btn btn-danger" type="submit" name="submit">Да, удалить</button>
+                </form>
+            <?php else: ?>
+                <h2 class="text-center text-success">Статья успешно удалена!</h2>
+                  <a class="centered btn btn-default" role="button" href="/admin">Вернуться к списку</a>
+            <?php endif; ?>
         </div>
     </div>
 </body>

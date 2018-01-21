@@ -55,6 +55,7 @@
                     <div>
                         <p><i class="fa fa-pencil-square"></i> <?= $commentItem['author']; ?></p>
                         <p><?= $commentItem['body']; ?></p>
+                        <hr>
                     </div>
                 <?php } ?>
                 <h1>Оставьте комментарий</h1>

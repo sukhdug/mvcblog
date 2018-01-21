@@ -19,8 +19,9 @@ class Article
 
         if ($id) {
             $db = Database::getConnection();
-            $sql = 'SELECT * FROM articles WHERE id=' . $id;
+            $sql = 'SELECT * FROM articles WHERE id = ?';
             $result = $db->prepare($sql);
+            $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
             $result->setFetchMode(PDO::FETCH_ASSOC);
             $articlesItem = $result->fetch();
@@ -111,6 +112,27 @@ class Article
 
             return $errors;
         }
+    }
+
+    /**
+     * Delete single articles items to database
+     */
+    public function deleteArticle($id)
+    {
+
+        $result = 0;
+
+        if (empty($errors)) {
+
+            $db = Database::getConnection();
+            $sql = "DELETE FROM articles WHERE id = ?";
+            $result = $db->prepare($sql);
+            $result->bindParam(1, $id, PDO::PARAM_INT);
+            $result = $result->execute();
+        }
+
+        return $result;
+
     }
 
     public function countArticles()

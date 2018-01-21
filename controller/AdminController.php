@@ -79,6 +79,31 @@ class AdminController
         return true;
     }
 
+    public function actionDelete($id)
+    {
+        $articleModel = new Article();
+        $id = intval($id);
+        $result = 0;
+
+        if (isset($_POST['submit'])) {
+
+            $result = $articleModel->deleteArticle($id);
+
+        }
+
+        if ($id) {
+
+            $articlesItem = $articleModel->getArticlesItemByID($id);
+
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/delete.php');
+            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+            else require_once(ROOT . '/view/errors/noauth.php');
+
+        }
+
+        return true;
+    }
+
     public function actionAdd()
     {
         $articleModel = new Article();
