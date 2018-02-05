@@ -1,1 +1,4 @@
 .idea/*
+config/db_params.php
+.gitignore/
+/vendor/*

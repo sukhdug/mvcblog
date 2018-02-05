@@ -1,0 +1,12 @@
+{
+    "name": "vendor/mvcblog",
+    "authors": [
+        {
+            "name": "Handy-Surun Dugurzhap",
+            "email": "handy-surun.dugurzhap@office.e2e4gu.ru"
+        }
+    ],
+    "require": {
+		"twig/twig": "~2.0"
+	}
+}
