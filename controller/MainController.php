@@ -2,7 +2,6 @@
 
 include ROOT . '/model/Article.php';
 include ROOT . '/config/session.php';
-include ROOT . '/config/twig.php';
 
 class MainController {
 
@@ -20,11 +19,11 @@ class MainController {
         } elseif ($total < 5) {
             $max = $total;
         }
-        $articlesList = array();
-        $articlesList = $articleModel->getArticlesList($min, $max);
+        $articles = array();
+        $articles = $articleModel->getArticlesList($min, $max);
 
-        echo $twig->render('/main/index.html', [
-            'articles' => $articlesList
+        echo $twig->render('/main/index.html.twig', [
+            'articles' => $articles
         ]);
         return true;
     }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block head %}
+            <link rel="stylesheet" href="/template/css/bootstrap.css" />
+            <link rel="stylesheet" href="/template/css/jasny-bootstrap.min.css" />
+            <link rel="stylesheet" href="/template/css/font-awesome.css" />
+            <link rel="stylesheet" href="/template/css/common-styles.css" />
+            <script src="/template/js/jquery.js" type="text/javascript"></script>
+            <script src="/template/js/bootstrap.js" type="text/javascript"></script>
+            <script src="/template/js/jasny-bootstrap.js" type="text/javascript"></script>
+        {% endblock %}
+    </head>
+    <body>
+        {% include '/layouts/navigation.php' %}
+        {% block body %}{% endblock %}
+        {% include '/layouts/footer.php' %}
+    </body>
+</html>

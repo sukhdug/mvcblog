@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block title %} Все статьи {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% for article in articles %}
+                <h1><i class="fa fa-pencil-square"></i> <a href="/articles/{{ article.id }}">{{ article.title }}</a></h1>
+                <p>Author: {{ article.author }}</p>
+                <p class="content{{ article.title }}">{{ article.short_content }}</p>
+                <p><a class="btn btn-default" role="button" href="/articles/{{ article.id }}">Читать дальше <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></p>
+                <p><i class="fa fa-heart"></i> {{ article.like_count }}</p>
+            {% endfor %}
+            <div class="centered">
+                {% include '/layouts/pagination.html.twig' with {
+                        currentFilters: { myFilter: filtervariables },
+                        currentPage: currentPage,
+                        paginationPath: "/articles/page/",
+                        lastPage: totalPages,
+                        showAlwaysFirstAndLast: true
+                    } only %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
