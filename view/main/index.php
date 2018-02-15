@@ -74,18 +74,9 @@
             <hr>
             <div class="container">
                 <div class="row">
-                    <?php if ($articlesList) { ?>
-                        <?php foreach ($articlesList as $articleItem) { ?>
-                            <h1><i class="fa fa-pencil-square"></i>
-                                <a href="/articles/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
-                            <p>Author: <?= $articleItem['author']; ?></p>
-                            <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
-                            <p><a class="btn btn-default" role="button" href="/articles/<?= $articleItem['id'] ?>">Читать дальше <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></p>
-                            <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
-                        <?php } ?>
-                    <?php } ?>
-                    <p><a class="btn btn-primary btn-lg" role="button" href="/articles">Все статьи</a></p>
-                </div>
+                   {% for article in articles %}
+                   <h1>{{ article.title }}</h1>
+                    {% endfor %}
             </div>
             <div class="container">
                 <hr>
