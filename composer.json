@@ -1,12 +1,16 @@
 {
-    "name": "vendor/mvcblog",
+    "name": "sukhdug/sukhdug",
+    "type": "project",
+    "description": "MVC Framework by Handy",
+    "license": "MIT",
     "authors": [
         {
             "name": "Handy-Surun Dugurzhap",
-            "email": "handy-surun.dugurzhap@office.e2e4gu.ru"
+            "email": "sukhdug@gmail.com"
         }
     ],
     "require": {
-		"twig/twig": "~2.0"
-	}
+        "php": ">=7.0",
+        "twig/twig": "~2.0"
+    }
 }
