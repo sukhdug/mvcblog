@@ -17,7 +17,7 @@ composer create-project sukhdug/sukhdug
 
 ```bash
 sudo chown -R yourname.yoursurname:www-data /full/path/to/sukhdug
-chmod -R g+ws /full/path/to/mvcblog
+chmod -R g+ws /full/path/to/sukhdug
 ```
 
 После этого создайте БД и пользователя в mysql с названием mvcblog. 
