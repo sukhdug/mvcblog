@@ -1,3 +1,6 @@
+body {
+    background:url(/template/img/background.png);
+}
 .centered {
     text-align: center;
 }
@@ -42,3 +45,20 @@ a.navbar-brand:hover, a.navbar-brand:focus {
     color: white;
 }
 /* ----------end of navigation styles--------- */
+/* --------------Slider styles----------------*/
+.carousel {
+    margin-top: 20px;
+}
+.item .thumb {
+    width: 25%;
+    cursor: pointer;
+    float: left;
+}
+.item .thumb img {
+    width: 100%;
+    margin: 2px;
+}
+.item img {
+    width: 100%; 
+}
+/*------------end of slider styles--------------*/
