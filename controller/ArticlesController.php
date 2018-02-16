@@ -36,10 +36,12 @@ class ArticlesController
 
     public function actionView($id)
     {
+        $twigPath = 'config/twig.php';
+        $twig = include($twigPath);
         $commentModel = new Comment();
         $articleModel = new Article();
         $result = array();
-        $comment = [
+        $WriteComment = [
             'comment' => '',
             'author' => '',
             'id' => 0
@@ -47,20 +49,29 @@ class ArticlesController
         $id = intval($id);
         if (isset($_POST['submit'])) {
 
-            $comment['comment'] = $_POST['inputComment'];
-            $comment['author'] = $_POST['inputAuthor'];
-            $comment['id'] = $id;
-            $result = $commentModel->addCommentForArticle($comment);
+            $WriteComment['comment'] = $_POST['inputComment'];
+            $WriteComment['author'] = $_POST['inputAuthor'];
+            $WriteComment['id'] = $id;
+            $result = $commentModel->addCommentForArticle($WriteComment);
         }
 
         if ($id) {
 
-            $articlesItem = $articleModel->getArticlesItemByID($id);
-            $commentsList = $commentModel->getCommentsList($id);
+            $article = $articleModel->getArticlesItemByID($id);
+            $comments = $commentModel->getCommentsList($id);
 
-            if ($articlesItem) require_once(ROOT . '/view/articles/view.php');
-            else require_once(ROOT . '/view/errors/noarticle.php');
+            if ($article) {
 
+                echo $twig->render('/articles/view.html.twig', [
+                    'article' => $article,
+                    'comments' => $comments,
+                    'result' => $result,
+                    'writecomment' => $WriteComment
+                ]);
+            }
+            else {
+                require_once(ROOT . '/view/errors/noarticle.php');
+            }
         }
         return true;
 
