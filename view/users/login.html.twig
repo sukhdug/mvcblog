@@ -1,19 +1,19 @@
-<?php require(ROOT . '/view/layout.php'); ?>
-<?php require(ROOT . '/view/layouts/navigation.php'); ?>
-<html>
-<head>
-    <title>О проекте</title>
-</head>
-<body>
+{% extends "base.html.twig" %}
+{% block title %} Вход на сайт {% endblock %}
+{% block body %}
     <div class="container">
         <div class="row">
             <h1>Войти</h1>
-            <p class="text-left text-info" ><?= array_shift($result); ?></p>
+            {% for msg in result %}
+                <div class="alert alert-info">
+                    {{ msg|upper }}
+                </div>
+            {% endfor %}
             <form name="Login"
-                    method="POST">
+                  method="POST">
                 <div class="form-group">
                     <label for="inputLogin">Логин</label>
-                    <input type="text" name="inputLogin" class="form-control" id="login" placeholder="Введите логин" value="<?= $user['login']; ?>">
+                    <input type="text" name="inputLogin" class="form-control" id="login" placeholder="Введите логин" value="{{ user.login }}">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword">Пароль</label>
@@ -26,11 +26,4 @@
             </form>
         </div>
     </div>
-    <div class="container">
-        <hr>
-        <footer>
-            <p>&copy; Ханды-Сурун 2018</p>
-        </footer>
-    </div>
-</body>
-</html>
+{% endblock %}

@@ -1,12 +1,14 @@
 <?php
 
-include_once ROOT. '/model/User.php';
-include_once ROOT. '/config/session.php';
+include ROOT. '/model/User.php';
+include ROOT. '/config/session.php';
 
 class UsersController
 {
     public function actionSignup()
     {
+        $twigPath = 'config/twig.php';
+        $twig = include($twigPath);
         $userModel = new User();
         $result = array();
         $user = [
@@ -32,13 +34,20 @@ class UsersController
         }
 
         if (isset($_SESSION['logged'])) require_once(ROOT . '/view/users/logged.php');
-        else require_once(ROOT . '/view/users/signup.php');
+        else {
+            echo $twig->render('/users/signup.html.twig', [
+                'user' => $user,
+                'result' => $result
+            ]);
+        }
 
         return true;
     }
 
     public function actionLogin()
     {
+        $twigPath = 'config/twig.php';
+        $twig = include($twigPath);
         $userModel = new User();
         $result = array();
         $user = [
@@ -60,7 +69,10 @@ class UsersController
 
         }else {
 
-            require_once(ROOT . '/view/users/login.php');
+            echo $twig->render('/users/login.html.twig', [
+                'user' => $user,
+                'result' => $result
+            ]);
         }
 
         return true;

@@ -1,3 +1,4 @@
+{% block content %}
 <div class="header">
     <div class="navbar navbar-inner" role="navigation">
         <div class="container">
@@ -24,20 +25,21 @@
                     <li><a href="/contacts">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <?php if (isset($_SESSION['logged'])): ?>
-                        <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Привет, <?= $_SESSION['logged']['login']; ?>!</a>
+                    {% if session.logged %}
+                        <li class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Привет, {{ session.logged.login }}! <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <?php if ($_SESSION['logged']['admin']): ?>
+                                {% if session.logged.admin %}
                                     <li><a href="/admin">Администрирование</a></li>
-                                <?php endif; ?>
+                                {% endif %}
                                 <li><a href="/logout">Выйти</a></li>
                             </ul>
                         </li>
-                    <?php else: ?>
+                    {% else %}
                         <li><a href="/login">Войти</a></li>
-                    <?php endif; ?>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}

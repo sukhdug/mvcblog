@@ -23,7 +23,8 @@ class MainController {
         $articles = $articleModel->getArticlesList($min, $max);
 
         echo $twig->render('/main/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'session'   => $_SESSION
         ]);
         return true;
     }
@@ -33,7 +34,9 @@ class MainController {
         $twigPath = 'config/twig.php';
         $twig = include($twigPath);
 
-        echo $twig->render('/main/about.html.twig');
+        echo $twig->render('/main/about.html.twig', [
+            'session'   => $_SESSION
+        ]);
         return true;
     }
 
@@ -42,7 +45,9 @@ class MainController {
         $twigPath = 'config/twig.php';
         $twig = include($twigPath);
 
-        echo $twig->render('/main/contact.html.twig');
+        echo $twig->render('/main/contact.html.twig', [
+            'session'   => $_SESSION
+        ]);
         return true;
     }
 

@@ -29,7 +29,8 @@ class ArticlesController
         echo $twig->render('/articles/index.html.twig', [
             'articles' => $articles,
             'currentPage' => $page,
-            'totalPages' => $num_pages
+            'totalPages' => $num_pages,
+            'session'   => $_SESSION
         ]);
         return true;
     }
@@ -66,7 +67,8 @@ class ArticlesController
                     'article' => $article,
                     'comments' => $comments,
                     'result' => $result,
-                    'writecomment' => $WriteComment
+                    'writecomment' => $WriteComment,
+                    'session'   => $_SESSION
                 ]);
             }
             else {
