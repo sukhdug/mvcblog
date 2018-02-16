@@ -29,14 +29,20 @@ class MainController {
     }
 
     public function actionAbout() {
-        require_once(ROOT . '/view/main/about.php');
 
+        $twigPath = 'config/twig.php';
+        $twig = include($twigPath);
+
+        echo $twig->render('/main/about.html.twig');
         return true;
     }
 
     public function actionContact() {
-        require_once(ROOT . '/view/main/contact.php');
 
+        $twigPath = 'config/twig.php';
+        $twig = include($twigPath);
+
+        echo $twig->render('/main/contact.html.twig');
         return true;
     }
 
