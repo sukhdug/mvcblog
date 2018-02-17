@@ -39,7 +39,7 @@ class Article
 
         $db = Database::getConnection();
         $articlesList = array();
-        $sql = 'SELECT * FROM articles ORDER BY id ASC LIMIT ?, ?';
+        $sql = 'SELECT * FROM articles ORDER BY id DESC LIMIT ?, ?';
         $result = $db->prepare($sql);
         $result->bindValue(1, $min, PDO::PARAM_INT);
         $result->bindValue(2, $max, PDO::PARAM_INT);
@@ -145,6 +145,29 @@ class Article
         $total = $row[0];
         return $total;
 
+    }
+
+    public function likedArticle($id) {
+
+        $id = intval($id);
+
+        if ($id) {
+            $db = Database::getConnection();
+            $sql = 'SELECT like_count FROM articles WHERE id = ?';
+            $result = $db->prepare($sql);
+            $result->bindValue(1, $id, PDO::PARAM_INT);
+            $result->execute();
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+            $like_count = $result->fetch();
+            $sql2 = "UPDATE articles SET like_count = :like_count WHERE id = :id";
+            $result2 = $db->prepare($sql2);
+            $result2->bindParam(":id", $article['id'], PDO::PARAM_INT);
+            $result2->bindParam(":like_count", $like_count + 1, PDO::PARAM_INT);
+            if ($result->execute())
+                return like_count + 1;
+            else
+                return like_count;
+        }
     }
 
     private function validation($article)

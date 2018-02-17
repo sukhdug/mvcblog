@@ -1,6 +1,5 @@
 {% extends "base.html.twig" %}
 {% block title %} Главная страница {% endblock %}
-
 {% block body %}
     <div class="container">
         <div class="row">
@@ -72,12 +71,15 @@
     <hr>
     <div class="container">
         <div class="row">
+            <h1 id="result">Последние статьи</h1>
             {% for article in articles %}
-                <h1><i class="fa fa-pencil-square"></i> <a href="/articles/{{ article.id }}">{{ article.title }}</a></h1>
+                <h2><i class="fa fa-pencil-square"></i> <a href="/articles/{{ article.id }}">{{ article.title }}</a></h2>
                 <p>Author: {{ article.author }}</p>
                 <p class="content{{ article.title }}">{{ article.short_content }}</p>
-                <p><a class="btn btn-default" role="button" href="/articles/{{ article.id }}">Читать дальше <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></p>
-                <p><i class="fa fa-heart"></i> {{ article.like_count }}</p>
+                <p>
+                    <a class="btn btn-primary liked" id="like{{ article.id }}" article_id="{{ article.id }}" role="button"><i class="fa fa-heart"></i> <span>{{ article.like_count }}</span></a>
+                    <a class="btn btn-default" role="button" href="/articles/{{ article.id }}">Читать дальше <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </p>
             {% endfor %}
             <p><a class="btn btn-primary btn-lg" role="button" href="/articles">Все статьи</a></p>
         </div>

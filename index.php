@@ -1,5 +1,5 @@
 <?php
-// FRONT COTROLLER
+// FRONT CONTROLLER
 
 // 1. Общие настройки
 

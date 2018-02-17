@@ -76,6 +76,10 @@ class ArticlesController
             }
         }
         return true;
+    }
 
+    public function actionLiked($id) {
+
+        return "Sorry!";
     }
 }
