@@ -72,7 +72,9 @@ class Article
 
             if (empty($errors)) {
 
+
                 $picture = "template/img/articles/". $article['picture'];
+                $picture_type = $article['file_type'];
                 $file_tmp = $article['file_tmp'];
                 $short_content = substr($article['body'], 0, 255);
                 $db = Database::getConnection();
@@ -154,29 +156,6 @@ class Article
 
     }
 
-    public function likedArticle($id) {
-
-        $id = intval($id);
-
-        if ($id) {
-            $db = Database::getConnection();
-            $sql = 'SELECT like_count FROM articles WHERE id = ?';
-            $result = $db->prepare($sql);
-            $result->bindValue(1, $id, PDO::PARAM_INT);
-            $result->execute();
-            $result->setFetchMode(PDO::FETCH_ASSOC);
-            $like_count = $result->fetch();
-            $sql2 = "UPDATE articles SET like_count = :like_count WHERE id = :id";
-            $result2 = $db->prepare($sql2);
-            $result2->bindParam(":id", $article['id'], PDO::PARAM_INT);
-            $result2->bindParam(":like_count", $like_count + 1, PDO::PARAM_INT);
-            if ($result->execute())
-                return like_count + 1;
-            else
-                return like_count;
-        }
-    }
-
     private function validation($article)
     {
         $errors = array();
@@ -187,7 +166,7 @@ class Article
         if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $article['author'])) $errors[] = 'Имя автора неопределенное';
         if (empty($article['body'])) $errors[] = 'Статья пустая';
         if (strlen($article['body']) < 100 && strlen($article['body']) > 10000) $errors[] = 'Статья слишком короткое или длинное';
-
+        if(($article['file_type'] != 'image/jpeg') && ($article['file_type'] != 'image/jpg') && ($article['file_type'] != 'image/png')) $errors[] = 'Недопустимый тип файла';
         return $errors;
     }
 }

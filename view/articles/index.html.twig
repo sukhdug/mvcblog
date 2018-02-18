@@ -7,7 +7,7 @@
                 <h1><i class="fa fa-pencil-square"></i> <a href="/articles/{{ article.id }}">{{ article.title }}</a></h1>
                 <p>Author: {{ article.author }}</p>
                 {% if article.picture %}
-                    <p class="picture"><img src="{{ article.picture }}" width="70%"></p>
+                    <p class="picture"><img src="/{{ article.picture }}" width="70%"></p>
                 {% endif %}
                 <p class="content{{ article.title }}">{{ article.short_content }}</p>
                 <p>

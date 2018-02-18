@@ -113,7 +113,8 @@ class AdminController
             'author' => '',
             'body' => '',
             'picture' => '',
-            'file_tmp' => ''
+            'file_tmp' => '',
+            'file_type' => ''
         ];
 
         if (isset($_POST['submit'])) {
@@ -123,6 +124,7 @@ class AdminController
             $article['body'] = $_POST['inputBody'];
             $article['picture'] = $_FILES['inputPicture']['name'];
             $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
+            $article['file_type'] = $_FILES['inputPicture']['type'];
             $result = $articleModel->insertArticle($article);
         }
 
