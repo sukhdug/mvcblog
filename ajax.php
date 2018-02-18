@@ -7,13 +7,12 @@ $id = @$_POST['id'];
 if ($controller && $action && $id) {
 
     $controller .= "Controller";
-    $controllerFile = "controller/" . $controller . ".php";
-    if (file_exists($controllerFile))
-        require_once($controllerFile);
+    $controllerFile = __DIR__ . "/controller/" . $controller . ".php";
+    include($controllerFile);
     $controllerObject = new $controller;
     $method = "action" . $action;
-    $result = $controllerObject->$method($id);
-    echo $result;
+    $result = call_user_func(array($controllerObject, $method), $id);
+
 } else {
     die("Unknown error! Sorry :(");
 }

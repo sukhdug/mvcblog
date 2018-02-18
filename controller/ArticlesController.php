@@ -79,7 +79,7 @@ class ArticlesController
     }
 
     public function actionLiked($id) {
-
-        return "Sorry!";
+        echo $id;
+        return true;
     }
 }

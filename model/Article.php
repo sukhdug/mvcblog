@@ -52,6 +52,7 @@ class Article
             $articlesList[$i]['author'] = $row['author'];
             $articlesList[$i]['body'] = $row['body'];
             $articlesList[$i]['short_content'] = $row['short_content'];
+            $articlesList[$i]['picture'] = $row['picture'];
             $articlesList[$i]['like_count'] = $row['like_count'];
             $i++;
         }
@@ -71,15 +72,21 @@ class Article
 
             if (empty($errors)) {
 
+                $picture = "template/img/articles/". $article['picture'];
+                $file_tmp = $article['file_tmp'];
                 $short_content = substr($article['body'], 0, 255);
                 $db = Database::getConnection();
-                $sql = "INSERT INTO articles (title, author, body, short_content, like_count) VALUES (:title, :author, :body, :short_content, 0)";
+                $sql = "INSERT INTO articles (title, author, body, short_content, picture, like_count) VALUES (:title, :author, :body, :short_content, :picture, 0)";
                 $result = $db->prepare($sql);
                 $result->bindParam(":title", $article['title']);
                 $result->bindParam(":author", $article['author']);
                 $result->bindParam(":body", $article['body']);
                 $result->bindParam(":short_content", $short_content);
-                if ($result->execute()) $errors[] = 'Статья успешно добавлена';
+                $result->bindParam(":picture", $picture);
+                if ($result->execute()) {
+                    $errors[] = 'Статья успешно добавлена';
+                    move_uploaded_file($file_tmp, $picture);
+                }
             }
 
             return $errors;

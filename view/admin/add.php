@@ -14,7 +14,8 @@
             <h1>Добавить статью</h1>
             <p class="text-left text-info" ><?= array_shift($result); ?></p>
             <form name="AddArticle"
-                  method="POST">
+                  method="POST"
+                  enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="inputTitle">Заголовок статьи</label>
                     <input type="text" name="inputTitle" class="form-control" id="title" placeholder="Введите заголовок" value="<?= $article['title']; ?>">
@@ -26,6 +27,10 @@
                 <div class="form-group">
                     <label for="inputBody">Содержание статьи</label>
                     <textarea name="inputBody" class="form-control" id="body" rows="10" placeholder="Напишите содержание статьи"><?= $article['body']; ?></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputBody">Изображение статьи</label>
+                    <input type="file" name="inputPicture" class="form-control" id="picture" placeholder="Выберите изображение">
                 </div>
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-primary" id="submit">Сохранить</button>

@@ -1,15 +1,13 @@
 jQuery(document).ready(function () {
 
-    $(".liked").bind("click", function () {
+    $(".liked").on("click", function () {
 
         var id = $(this).attr("article_id");
         $.ajax({
-            type: 'POST',
+            type: 'post',
             url: "ajax.php",
+            dataType: 'html',
             data: {controller: 'Articles', action: 'Liked', id: id},
-            beforeSend: function(xhr){
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            },
             success: function (data) {
                 $("#like" + id + " > span").html(data);
             },

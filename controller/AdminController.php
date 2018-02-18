@@ -111,7 +111,9 @@ class AdminController
         $article = [
             'title' => '',
             'author' => '',
-            'body' => ''
+            'body' => '',
+            'picture' => '',
+            'file_tmp' => ''
         ];
 
         if (isset($_POST['submit'])) {
@@ -119,6 +121,8 @@ class AdminController
             $article['title'] = $_POST['inputTitle'];
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];
+            $article['picture'] = $_FILES['inputPicture']['name'];
+            $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
             $result = $articleModel->insertArticle($article);
         }
 

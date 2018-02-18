@@ -75,6 +75,9 @@
             {% for article in articles %}
                 <h2><i class="fa fa-pencil-square"></i> <a href="/articles/{{ article.id }}">{{ article.title }}</a></h2>
                 <p>Author: {{ article.author }}</p>
+                {% if article.picture %}
+                        <p class="picture"><img src="{{ article.picture }}" width="70%"></p>
+                {% endif %}
                 <p class="content{{ article.title }}">{{ article.short_content }}</p>
                 <p>
                     <a class="btn btn-primary liked" id="like{{ article.id }}" article_id="{{ article.id }}" role="button"><i class="fa fa-heart"></i> <span>{{ article.like_count }}</span></a>
