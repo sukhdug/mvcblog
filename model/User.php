@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: handy
- * Date: 18.01.18
- * Time: 17:48
- */
-class User
-{
+require_once "Model.php";
+
+class User extends Model {
     /**
      * Add single users items to database
      */
@@ -20,9 +15,8 @@ class User
             if (empty($errors)) {
                 $password = password_hash($user['password'], PASSWORD_DEFAULT);
                 $admin = 0;
-                $db = Database::getConnection();
                 $sql = "INSERT INTO users (login, email, fname, surname, password, admin) VALUES (:login, :email, :name, :surname, :password, :admin)";
-                $result = $db->prepare($sql);
+                $result = $this->db->prepare($sql);
                 $result->bindParam(":login", $user['login']);
                 $result->bindParam(":email", $user['email']);
                 $result->bindParam(":name", $user['name']);
@@ -44,9 +38,8 @@ class User
 
             if (empty($errors)) {
 
-                $db = Database::getConnection();
                 $sql = "SELECT login, password, admin FROM users where login= ? ";
-                $sth = $db->prepare($sql);
+                $sth = $this->db->prepare($sql);
                 $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
                 $sth->execute();
                 $sth->setFetchMode(PDO::FETCH_ASSOC);
@@ -62,9 +55,8 @@ class User
     private function authValidation($user)
     {
         $errors = array();
-        $db = Database::getConnection();
         $sql = "SELECT login, password FROM users where login= ? ";
-        $sth = $db->prepare($sql);
+        $sth = $this->db->prepare($sql);
         $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
         $sth->execute();
         $sth->setFetchMode(PDO::FETCH_ASSOC);
@@ -81,9 +73,8 @@ class User
     private function registrationValidation($user)
     {
         $errors = array();
-        $db = Database::getConnection();
         $sql = "SELECT login FROM users where login= ? ";
-        $sth = $db->prepare($sql);
+        $sth = $this->db->prepare($sql);
         $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
         $sth->execute();
         $sth->setFetchMode(PDO::FETCH_ASSOC);
@@ -91,11 +82,11 @@ class User
 
         if ($loginResult) $errors[] = 'Пользователь с таким логином уже зарегистрирован';
         if (empty($user['name'])) $errors[] = 'Имя не введено';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['name'])) $errors[] = 'Некорректное имя';
         if (empty($user['surname'])) $errors[] = 'Фамилия не введена';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['surname'])) $errors[] = 'Некорректная фамилия';
         if (empty($user['email'])) $errors[] = 'Email не введен';
         if (empty($user['login'])) $errors[] = 'Логин не введен';
-        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['name'])) $errors[] = 'Некорректное имя';
-        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['surname'])) $errors[] = 'Некорректная фамилия';
         if (empty($user['password'])) $errors[] = 'Пароль пустой';
         if (empty($user['password2'])) $errors[] = 'Пароль снова не введен';
         if ($user['password'] != $user['password2']) $errors[] = 'Пароль снова введен неправильный';

@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: handy
- * Date: 02.01.18
- * Time: 16:35
- */
-class Comment
-{
+require_once "Model.php";
+
+class Comment extends Model {
+
     /**
      * Returns an array of comments items
      */
@@ -16,10 +12,9 @@ class Comment
         $article_id = intval($article_id);
         if ($article_id) {
 
-            $db = Database::getConnection();
             $commentsList = array();
             $sql = 'SELECT id, body, author FROM comments WHERE article_id=' . $article_id;
-            $result = $db->prepare($sql);
+            $result = $this->db->prepare($sql);
             $result->execute();
 
             $i = 0;
@@ -43,9 +38,8 @@ class Comment
             $errors = $this->validation($comment);
 
             if(empty($errors)) {
-                $db = Database::getConnection();
                 $sql = "INSERT INTO comments (body, author, article_id) VALUES (:comment, :author, :article_id)";
-                $result = $db->prepare($sql);
+                $result = $this->db->prepare($sql);
                 $result->bindParam(":comment", $comment['comment']);
                 $result->bindParam(":author", $comment['author']);
                 $result->bindParam(":article_id", $comment['id']);

@@ -1,14 +1,12 @@
 <?php
 
+include "Controller.php";
 include ROOT. '/model/User.php';
-include ROOT. '/config/session.php';
 
-class UsersController
+class UsersController extends Controller
 {
     public function actionSignup()
     {
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
         $userModel = new User();
         $result = array();
         $user = [
@@ -35,7 +33,7 @@ class UsersController
 
         if (isset($_SESSION['logged'])) require_once(ROOT . '/view/users/logged.php');
         else {
-            echo $twig->render('/users/signup.html.twig', [
+            echo $this->twig->render('/users/signup.html.twig', [
                 'user' => $user,
                 'result' => $result
             ]);
@@ -46,8 +44,6 @@ class UsersController
 
     public function actionLogin()
     {
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
         $userModel = new User();
         $result = array();
         $user = [
@@ -69,7 +65,7 @@ class UsersController
 
         }else {
 
-            echo $twig->render('/users/login.html.twig', [
+            echo $this->twig->render('/users/login.html.twig', [
                 'user' => $user,
                 'result' => $result
             ]);

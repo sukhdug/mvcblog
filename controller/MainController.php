@@ -1,14 +1,11 @@
 <?php
 
+include "Controller.php";
 include ROOT . '/model/Article.php';
-include ROOT . '/config/session.php';
 
-class MainController {
+class MainController extends Controller{
 
     public function actionIndex() {
-
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
 
         $articleModel = new Article();
 
@@ -22,7 +19,7 @@ class MainController {
         $articles = array();
         $articles = $articleModel->getArticlesList($min, $max);
 
-        echo $twig->render('/main/index.html.twig', [
+        echo $this->twig->render('/main/index.html.twig', [
             'articles' => $articles,
             'session'   => $_SESSION
         ]);
@@ -31,10 +28,7 @@ class MainController {
 
     public function actionAbout() {
 
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
-
-        echo $twig->render('/main/about.html.twig', [
+        echo $this->twig->render('/main/about.html.twig', [
             'session'   => $_SESSION
         ]);
         return true;
@@ -42,10 +36,7 @@ class MainController {
 
     public function actionContact() {
 
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
-
-        echo $twig->render('/main/contact.html.twig', [
+        echo $this->twig->render('/main/contact.html.twig', [
             'session'   => $_SESSION
         ]);
         return true;

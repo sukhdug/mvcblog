@@ -1,15 +1,13 @@
 <?php
 
+include "Controller.php";
 include ROOT. '/model/Article.php';
 include ROOT. '/model/Comment.php';
-include ROOT. '/config/session.php';
 
-class ArticlesController
-{
-    public function actionIndex($p)
-    {
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
+class ArticlesController extends Controller{
+
+    public function actionIndex($p) {
+
         $articleModel = new Article();
 
         if(!isset($p)) $page = 1;
@@ -26,7 +24,7 @@ class ArticlesController
         $articles = array();
         $articles = $articleModel->getArticlesList($start, $max_elements);
 
-        echo $twig->render('/articles/index.html.twig', [
+        echo $this->twig->render('/articles/index.html.twig', [
             'articles' => $articles,
             'currentPage' => $page,
             'totalPages' => $num_pages,
@@ -35,10 +33,8 @@ class ArticlesController
         return true;
     }
 
-    public function actionView($id)
-    {
-        $twigPath = 'config/twig.php';
-        $twig = include($twigPath);
+    public function actionView($id) {
+
         $commentModel = new Comment();
         $articleModel = new Article();
         $result = array();
@@ -63,7 +59,7 @@ class ArticlesController
 
             if ($article) {
 
-                echo $twig->render('/articles/view.html.twig', [
+                echo $this->twig->render('/articles/view.html.twig', [
                     'article' => $article,
                     'comments' => $comments,
                     'result' => $result,

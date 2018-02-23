@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: handy
- * Date: 22.12.17
- * Time: 23:09
- */
-class Article
-{
+require_once "Model.php";
+
+class Article extends Model {
 
     /**
      * Returns single articles items with specified id
@@ -18,9 +13,8 @@ class Article
         $id = intval($id);
 
         if ($id) {
-            $db = Database::getConnection();
             $sql = 'SELECT * FROM articles WHERE id = ?';
-            $result = $db->prepare($sql);
+            $result = $this->db->prepare($sql);
             $result->bindValue(1, $id, PDO::PARAM_INT);
             $result->execute();
             $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -37,10 +31,9 @@ class Article
     public function getArticlesList($min, $max)
     {
 
-        $db = Database::getConnection();
         $articlesList = array();
         $sql = 'SELECT * FROM articles ORDER BY id DESC LIMIT ?, ?';
-        $result = $db->prepare($sql);
+        $result = $this->db->prepare($sql);
         $result->bindValue(1, $min, PDO::PARAM_INT);
         $result->bindValue(2, $max, PDO::PARAM_INT);
         $result->execute();
@@ -77,9 +70,8 @@ class Article
                 $picture_type = $article['file_type'];
                 $file_tmp = $article['file_tmp'];
                 $short_content = substr($article['body'], 0, 255);
-                $db = Database::getConnection();
                 $sql = "INSERT INTO articles (title, author, body, short_content, picture, like_count) VALUES (:title, :author, :body, :short_content, :picture, 0)";
-                $result = $db->prepare($sql);
+                $result = $this->db->prepare($sql);
                 $result->bindParam(":title", $article['title']);
                 $result->bindParam(":author", $article['author']);
                 $result->bindParam(":body", $article['body']);
@@ -108,9 +100,8 @@ class Article
             if (empty($errors)) {
 
                 $short_content = substr($article['body'], 0, 255);
-                $db = Database::getConnection();
                 $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content WHERE id = :id";
-                $result = $db->prepare($sql);
+                $result = $this->db->prepare($sql);
                 $result->bindParam(":id", $article['id'], PDO::PARAM_INT);
                 $result->bindParam(":title",$article['title']);
                 $result->bindParam(":author",$article['author']);
@@ -133,9 +124,8 @@ class Article
 
         if (empty($errors)) {
 
-            $db = Database::getConnection();
             $sql = "DELETE FROM articles WHERE id = ?";
-            $result = $db->prepare($sql);
+            $result = $this->db->prepare($sql);
             $result->bindParam(1, $id, PDO::PARAM_INT);
             $result = $result->execute();
         }
@@ -146,9 +136,8 @@ class Article
 
     public function countArticles()
     {
-        $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM articles";
-        $sth = $db->prepare($sql);
+        $sth = $this->db->prepare($sql);
         $sth->execute();
         $row = $sth->fetch();
         $total = $row[0];
