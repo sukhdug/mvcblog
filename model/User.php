@@ -30,6 +30,27 @@ class User extends Model {
         }
     }
 
+    /**
+     * Returns single user items with specified id
+     * @rapam integer &id
+     */
+    public function getUserByID($id)
+    {
+        $id = intval($id);
+
+        if ($id) {
+            $sql = 'SELECT * FROM users WHERE id = ?';
+            $result = $this->db->prepare($sql);
+            $result->bindValue(1, $id, PDO::PARAM_INT);
+            $result->execute();
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+            $usersItem = $result->fetch();
+
+            return $usersItem;
+        }
+
+    }
+
     public function login($user)
     {
         if (isset($user)) {
@@ -38,7 +59,7 @@ class User extends Model {
 
             if (empty($errors)) {
 
-                $sql = "SELECT login, password, admin FROM users where login= ? ";
+                $sql = "SELECT * FROM users where login = ? ";
                 $sth = $this->db->prepare($sql);
                 $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
                 $sth->execute();

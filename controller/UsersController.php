@@ -1,12 +1,50 @@
 <?php
 
-include "Controller.php";
+require_once "Controller.php";
 include ROOT. '/model/User.php';
 
 class UsersController extends Controller
 {
-    public function actionSignup()
-    {
+
+    public function actionIndex($p) {
+
+        return true;
+    }
+
+    public function actionView($id) {
+
+        $userModel = new User();
+        $id = intval($id);
+        $usersItem = $userModel->getUserByID($id);
+
+        if ($usersItem) {
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']){
+                echo $this->twig->render('/users/view.html.twig', [
+                    'user' => $usersItem,
+                    'session' => $_SESSION
+                ]);
+            }
+            elseif (isset($_SESSION['logged']) && ($_SESSION['logged']['id'] == $usersItem['id'])) {
+                echo $this->twig->render('/users/view.html.twig', [
+                    'user' => $usersItem,
+                    'session' => $_SESSION
+                ]);
+            }
+            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin'])
+                require_once(ROOT . '/view/errors/notadmin.php');
+            else require_once(ROOT . '/view/errors/noauth.php');
+        }
+        else {
+            require_once(ROOT . '/view/errors/noarticle.php');
+        }
+
+
+
+        return true;
+    }
+
+    public function actionSignup() {
+
         $userModel = new User();
         $result = array();
         $user = [
@@ -42,8 +80,8 @@ class UsersController extends Controller
         return true;
     }
 
-    public function actionLogin()
-    {
+    public function actionLogin() {
+
         $userModel = new User();
         $result = array();
         $user = [
@@ -74,8 +112,7 @@ class UsersController extends Controller
         return true;
     }
 
-    public function actionLogout()
-    {
+    public function actionLogout() {
 
         if (isset($_SESSION['logged'])) {
 

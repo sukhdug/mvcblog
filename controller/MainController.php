@@ -1,6 +1,6 @@
 <?php
 
-include "Controller.php";
+require_once "Controller.php";
 include ROOT . '/model/Article.php';
 
 class MainController extends Controller{

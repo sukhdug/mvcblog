@@ -1,6 +1,6 @@
 <?php
 
-include "Controller.php";
+require_once "Controller.php";
 include ROOT. '/model/Article.php';
 include ROOT. '/model/Comment.php';
 
@@ -71,6 +71,90 @@ class ArticlesController extends Controller{
                 require_once(ROOT . '/view/errors/noarticle.php');
             }
         }
+        return true;
+    }
+
+    public function actionEdit($id) {
+
+        $articleModel = new Article();
+        $id = intval($id);
+        $result = array();
+
+        if (isset($_POST['submit'])) {
+
+            $article['title'] = $_POST['inputTitle'];
+            $article['author'] = $_POST['inputAuthor'];
+            $article['body'] = $_POST['inputBody'];
+            $article['id'] = $id;
+            $result = $articleModel->updateArticle($article);
+        }
+
+        if ($id) {
+
+            $articlesItem = $articleModel->getArticlesItemByID($id);
+
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/edit.php');
+            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+            else require_once(ROOT . '/view/errors/noauth.php');
+
+        }
+
+        return true;
+    }
+
+    public function actionDelete($id) {
+
+        $articleModel = new Article();
+        $id = intval($id);
+        $result = 0;
+
+        if (isset($_POST['submit'])) {
+
+            $result = $articleModel->deleteArticle($id);
+
+        }
+
+        if ($id) {
+
+            $articlesItem = $articleModel->getArticlesItemByID($id);
+
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/delete.php');
+            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+            else require_once(ROOT . '/view/errors/noauth.php');
+
+        }
+
+        return true;
+    }
+
+    public function actionAdd() {
+
+        $articleModel = new Article();
+        $result = array();
+        $article = [
+            'title' => '',
+            'author' => '',
+            'body' => '',
+            'picture' => '',
+            'file_tmp' => '',
+            'file_type' => ''
+        ];
+
+        if (isset($_POST['submit'])) {
+
+            $article['title'] = $_POST['inputTitle'];
+            $article['author'] = $_POST['inputAuthor'];
+            $article['body'] = $_POST['inputBody'];
+            $article['picture'] = $_FILES['inputPicture']['name'];
+            $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
+            $article['file_type'] = $_FILES['inputPicture']['type'];
+            $result = $articleModel->insertArticle($article);
+        }
+
+        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/add.php');
+        elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+        else require_once(ROOT . '/view/errors/noauth.php');
+
         return true;
     }
 

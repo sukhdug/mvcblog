@@ -1,5 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 body {
     background:url(/template/img/background.png);
+    font-family: 'Lato', 'sans-serif';
 }
 .centered {
     text-align: center;
