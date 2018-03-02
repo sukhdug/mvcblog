@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+{% block title %} Профиль {{ user.fname }} {{ user.surname }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% for user in users %}
+               <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 main text-center">
+                    <ul class="list-group profile-of-user">
+                        <a href="/users/{{ user.id }}">
+                            <li class="list-group-item text-muted">Информация о пользователе
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i></li>
+                        </a>
+                        <li class="list-group-item text-right">
+                            <span class="pull-left">
+                                <strong>Логин</strong></span> {{ user.login }}
+                        </li>
+                        <li class="list-group-item text-right">
+                            <span class="pull-left">
+                                <strong>Имя фамилия</strong></span> {{ user.fname }} {{ user.surname }}
+                        </li>
+                        <li class="list-group-item text-right">
+                            <span class="pull-left">
+                                <strong>Эл.почта</strong></span> {{ user.email }}
+                        </li>
+                        <li class="list-group-item text-right">
+                            <a href="#" class="btn btn-primary" type="button">редактировать</a>
+                            <a href="#" class="btn btn-danger" type="button">удалить</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="centered">
+            {% include '/layouts/pagination.html.twig' with {
+                    currentFilters: { myFilter: filtervariables },
+                    currentPage: currentPage,
+                    paginationPath: "/users/page/",
+                    lastPage: totalPages,
+                    showAlwaysFirstAndLast: true
+                } only %}
+        </div>
+    </div>
+{% endblock %}

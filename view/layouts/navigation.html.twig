@@ -30,6 +30,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/users/{{ session.logged.id }}">Профиль</a></li>
                                 {% if session.logged.admin %}
+                                    <li><a href="/users">Пользователи</a></li>
                                     <li><a href="/admin">Администрирование</a></li>
                                 {% endif %}
                                 <li><a href="/logout">Выйти</a></li>

@@ -8,6 +8,31 @@ class UsersController extends Controller
 
     public function actionIndex($p) {
 
+        $userModel = new User();
+
+        if(!isset($p)) $page = 1;
+        else {
+            $page = addslashes(strip_tags(trim($p)));
+            if($page < 1) $page = 1;
+        }
+        $max_elements = 5; // эта переменная хранит количество выводимых пользователей в одной странице
+        $total = $userModel->countUsers(); // общее количество пользователей
+        $num_pages = ceil($total / $max_elements);
+        if ($page > $num_pages) $page = $num_pages;
+        $start = ($page - 1) * $max_elements; // Стартовая позиция выборки из БД
+        $users = $userModel->getUsersList($start, $max_elements);
+        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']){
+            echo $this->twig->render('/users/index.html.twig', [
+                'users' => $users,
+                'currentPage' => $page,
+                'totalPages' => $num_pages,
+                'session'   => $_SESSION
+            ]);
+        }
+        elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin'])
+            require_once(ROOT . '/view/errors/notadmin.php');
+        else require_once(ROOT . '/view/errors/noauth.php');
+
         return true;
     }
 
@@ -37,8 +62,6 @@ class UsersController extends Controller
         else {
             require_once(ROOT . '/view/errors/noarticle.php');
         }
-
-
 
         return true;
     }

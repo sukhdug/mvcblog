@@ -3,15 +3,38 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
-                <div class="profile">
-                    <h1>Профиль {{ user.fname }} {{ user.surname }}!</h1>
-                    <div class="col-sm-12 col-xs-12 col-sm-8">
-                        <h2>{{ user.fname }} {{ user.surname }}</h2>
-                        <p><strong>Логин: </strong> {{ user.login }}</p>
-                        <p><strong>E-mail: </strong> {{ user.email }}</p>
-                    </div>
-                </div>
+            <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 main text-center">
+                <ul class="list-group profile-of-user">
+                    <li class="list-group-item text-muted">Профиль пользователя</li>
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong>Логин</strong></span> {{ user.login }}
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong>Имя</strong></span> {{ user.fname }}
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong>Фамилия</strong></span> {{ user.surname }}
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong>Эл.почта</strong></span> {{ user.email }}
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="pull-left">
+                            <strong>Администратор</strong></span>
+                        {% if user.admin %} да
+                        {% else %} нет
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item text-right">
+                        <a href="#" class="btn btn-primary" type="button">редактировать</a>
+                        <a href="#" class="btn btn-danger" type="button">удалить</a>
+                    </li>
+                </ul>
+
             </div>
         </div>
     </div>

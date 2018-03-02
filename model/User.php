@@ -34,6 +34,33 @@ class User extends Model {
      * Returns single user items with specified id
      * @rapam integer &id
      */
+    public function getUsersList($min, $max)
+    {
+
+        $usersList = array();
+        $sql = 'SELECT * FROM users ORDER BY login ASC LIMIT ?, ?';
+        $result = $this->db->prepare($sql);
+        $result->bindValue(1, $min, PDO::PARAM_INT);
+        $result->bindValue(2, $max, PDO::PARAM_INT);
+        $result->execute();
+
+        $i = 0;
+        while($row = $result->fetch()) {
+            $usersList[$i]['id'] = $row['id'];
+            $usersList[$i]['login'] = $row['login'];
+            $usersList[$i]['email'] = $row['email'];
+            $usersList[$i]['fname'] = $row['fname'];
+            $usersList[$i]['surname'] = $row['surname'];
+            $i++;
+        }
+
+        return $usersList;
+    }
+
+    /**
+     * Returns single user items with specified id
+     * @rapam integer &id
+     */
     public function getUserByID($id)
     {
         $id = intval($id);
@@ -48,7 +75,6 @@ class User extends Model {
 
             return $usersItem;
         }
-
     }
 
     public function login($user)
@@ -71,6 +97,17 @@ class User extends Model {
             return $errors;
 
         }
+    }
+
+    public function countUsers()
+    {
+        $sql = "SELECT COUNT(*) FROM users";
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        $row = $sth->fetch();
+        $total = $row[0];
+        return $total;
+
     }
 
     private function authValidation($user)
