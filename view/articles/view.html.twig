@@ -5,41 +5,47 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <h1>{{ article.title }}</h1>
-            {% if article.picture %}
-                <p class="picture"><img src="/{{ article.picture }}" width="70%"></p>
-            {% endif %}
-            <p>{{ article.body }}</p>
-            <p>Author: {{ article.author }}</p>
-            <p><i class="fa fa-heart"></i> {{ article.like_count }}</p>
-            <h2>Комментарии</h2>
-            {% for comment in comments %}
-                <div>
-                    <p><i class="fa fa-pencil-square"></i> {{ comment.author }}</p>
-                    <p>{{ comment.body }}</p>
-                    <hr>
-                </div>
-            {% endfor %}
-            <h2>Оставьте комментарий</h2>
-            {% for msg in result %}
-                <div class="alert alert-info">
-                    {{ msg }}
-                </div>
-            {% endfor %}
-            <form   name="AddComment"
-                    method="POST">
-                <div class="form-group">
-                    <label for="inputAuthor">Автор</label>
-                    <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя" value="{{ writecomment.author }}">
-                </div>
-                <div class="form-group">
-                    <label for="inputBody">Комментарий</label>
-                    <textarea name="inputComment" class="form-control" id="body" rows="5" placeholder="Напишите комментарий">{{ writecomment.comment }}</textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-primary" id="submit">Отправить</button>
-                </div>
-            </form>
+            <div class="col-xs-12 col-md-8">
+                <h1>{{ article.title }}</h1>
+                {% if article.picture %}
+                    <p class="picture"><img src="/{{ article.picture }}" width="70%"></p>
+                {% endif %}
+                <p>{{ article.body }}</p>
+                <p>Author: {{ article.author }}</p>
+                <p><i class="fa fa-heart"></i> {{ article.like_count }}</p>
+                <h2>Комментарии</h2>
+                {% for comment in comments %}
+                    <div>
+                        <p><i class="fa fa-pencil-square"></i> {{ comment.author }}</p>
+                        <p>{{ comment.body }}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+                {% if session.logged %}
+                <h2>Оставьте комментарий</h2>
+                {% for msg in result %}
+                    <div class="alert alert-info">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+                    <form   name="AddComment"
+                            method="POST">
+                        <div class="form-group">
+                            <label for="inputAuthor">Автор</label>
+                            <input type="text" name="inputAuthor" class="form-control" id="author" placeholder="Введите имя" value="{{ session.logged.login }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBody">Комментарий</label>
+                            <textarea name="inputComment" class="form-control" id="body" rows="5" placeholder="Напишите комментарий">{{ writecomment.comment }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="submit" class="btn btn-primary" id="submit">Отправить</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <h4>Только авторизованные пользователи могут оставлять комментарии. Войдите, пожалуйста.</h4>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

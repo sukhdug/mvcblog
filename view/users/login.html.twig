@@ -3,27 +3,29 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <h1>Войти</h1>
-            {% for msg in result %}
-                <div class="alert alert-info">
-                    {{ msg|upper }}
-                </div>
-            {% endfor %}
-            <form name="Login"
-                  method="POST">
-                <div class="form-group">
-                    <label for="inputLogin">Логин</label>
-                    <input type="text" name="inputLogin" class="form-control" id="login" placeholder="Введите логин" value="{{ user.login }}">
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword">Пароль</label>
-                    <input type="password" name="inputPassword" class="form-control" id="password" placeholder="Введите пароль">
-                </div>
-                <p><a href="#">Забыли пароль?</a> | <a href="/signup">Зарегистрироваться</a></p>
-                <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-primary" id="submit">Войти</button>
-                </div>
-            </form>
+            <div class="col-md-offset-3 col-md-6">
+                <form class="form-horizontal" name="Login" method="POST">
+                    <span class="heading">АВТОРИЗАЦИЯ</span>
+                    {% for msg in result|slice(0,1) %}
+                        <div class="alert alert-info">
+                            {{ msg|upper }}
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{ user.login }}" name="inputLogin" id="login" placeholder="Введите логин">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" name="inputPassword" id="password" placeholder="Введите пароль">
+                        <i class="fa fa-lock"></i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class="form-group">
+                        <span class="text"><a href="/signup">Зарегистрироваться</a></span>
+                        <button type="submit" name="submit" class="btn btn-default">ВХОД</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
