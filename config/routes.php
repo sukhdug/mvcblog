@@ -4,6 +4,7 @@ return array(
 
     'admin/article/delete/([0-9]+)' => 'articles/delete/$1',
     'admin/article/edit/([0-9]+)' => 'articles/edit/$1',
+    'users/edit/([0-9]+)' => 'users/edit/$1',
     'admin/article/([0-9]+)' => 'admin/view/$1',
     'admin/article/add' => 'articles/add',
     'admin/page/([0-9]+)' => 'admin/index/$1',

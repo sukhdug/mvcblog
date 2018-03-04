@@ -23,11 +23,11 @@
                 {% endfor %}
                 {% if session.logged %}
                 <h2>Оставьте комментарий</h2>
-                {% for msg in result %}
-                    <div class="alert alert-info">
-                        {{ msg }}
-                    </div>
-                {% endfor %}
+                    {% for msg in result|slice(0,1) %}
+                        <div class="alert alert-info">
+                            {{ msg|upper }}
+                        </div>
+                    {% endfor %}
                     <form   name="AddComment"
                             method="POST">
                         <div class="form-group">

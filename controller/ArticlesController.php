@@ -86,6 +86,11 @@ class ArticlesController extends Controller{
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];
             $article['id'] = $id;
+            if (isset($_FILES['inputPicture'])){
+                $article['picture'] = $_FILES['inputPicture']['name'];
+                $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
+                $article['file_type'] = $_FILES['inputPicture']['type'];
+            }
             $result = $articleModel->updateArticle($article);
         }
 
@@ -93,7 +98,13 @@ class ArticlesController extends Controller{
 
             $articlesItem = $articleModel->getArticlesItemByID($id);
 
-            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/edit.php');
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) {
+                echo $this->twig->render('/articles/edit.html.twig', [
+                    'article' => $articlesItem,
+                    'result' => $result,
+                    'session'   => $_SESSION
+                ]);
+            }
             elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
             else require_once(ROOT . '/view/errors/noauth.php');
 
@@ -145,15 +156,25 @@ class ArticlesController extends Controller{
             $article['title'] = $_POST['inputTitle'];
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];
-            $article['picture'] = $_FILES['inputPicture']['name'];
-            $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
-            $article['file_type'] = $_FILES['inputPicture']['type'];
+            if (isset($_FILES['inputPicture'])){
+                $article['picture'] = $_FILES['inputPicture']['name'];
+                $article['file_tmp'] = $_FILES['inputPicture']['tmp_name'];
+                $article['file_type'] = $_FILES['inputPicture']['type'];
+            }
             $result = $articleModel->insertArticle($article);
         }
 
-        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/add.php');
-        elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
-        else require_once(ROOT . '/view/errors/noauth.php');
+        if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) {
+            echo $this->twig->render('/articles/add.html.twig', [
+                'article' => $article,
+                'result' => $result,
+                'session'   => $_SESSION
+            ]);
+        }
+        elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin'])
+            require_once(ROOT . '/view/errors/notadmin.php');
+        else
+            require_once(ROOT . '/view/errors/noauth.php');
 
         return true;
     }

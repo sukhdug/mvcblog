@@ -66,6 +66,47 @@ class UsersController extends Controller
         return true;
     }
 
+    public function actionEdit($id) {
+        $userModel = new User();
+        $result = array();
+        $id = intval($id);
+        $user = $userModel->getUserByID($id);
+
+        if (isset($_POST['submit'])) {
+            $user['login'] = $_POST['inputLogin'];
+            $user['email'] = $_POST['inputEmail'];
+            $user['fname'] = $_POST['inputName'];
+            $user['surname'] = $_POST['inputSurname'];
+            $user['id'] = $id;
+            $result = $userModel->updateUser($user);
+        }
+
+        if ($user) {
+            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']){
+                echo $this->twig->render('/users/edit.html.twig', [
+                    'user' => $user,
+                    'result' => $result,
+                    'session' => $_SESSION
+                ]);
+            }
+            elseif (isset($_SESSION['logged']) && ($_SESSION['logged']['id'] == $user['id'])) {
+                echo $this->twig->render('/users/edit.html.twig', [
+                    'user' => $user,
+                    'result' => $result,
+                    'session' => $_SESSION
+                ]);
+            }
+            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin'])
+                require_once(ROOT . '/view/errors/notadmin.php');
+            else require_once(ROOT . '/view/errors/noauth.php');
+        }
+        else {
+            require_once(ROOT . '/view/errors/noarticle.php');
+        }
+
+        return true;
+    }
+
     public function actionSignup() {
 
         $userModel = new User();

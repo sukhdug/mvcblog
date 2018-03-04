@@ -66,9 +66,10 @@ class Article extends Model {
             if (empty($errors)) {
 
 
-                $picture = "template/img/articles/". $article['picture'];
-                $picture_type = $article['file_type'];
-                $file_tmp = $article['file_tmp'];
+                if (!empty($article['picture'])) {
+                    $picture = "template/img/articles/". $article['picture'];
+                    $file_tmp = $article['file_tmp'];
+                }
                 $short_content = substr($article['body'], 0, 255);
                 $sql = "INSERT INTO articles (title, author, body, short_content, picture, like_count) VALUES (:title, :author, :body, :short_content, :picture, 0)";
                 $result = $this->db->prepare($sql);
@@ -79,7 +80,9 @@ class Article extends Model {
                 $result->bindParam(":picture", $picture);
                 if ($result->execute()) {
                     $errors[] = 'Статья успешно добавлена';
-                    move_uploaded_file($file_tmp, $picture);
+                    if(isset($file_tmp)) {
+                        move_uploaded_file($file_tmp, $picture);
+                    }
                 }
             }
 
@@ -99,15 +102,25 @@ class Article extends Model {
 
             if (empty($errors)) {
 
+                if (!empty($article['picture'])) {
+                    $picture = "template/img/articles/". $article['picture'];
+                    $file_tmp = $article['file_tmp'];
+                }
                 $short_content = substr($article['body'], 0, 255);
-                $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content WHERE id = :id";
+                $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content, picture = :picture WHERE id = :id";
                 $result = $this->db->prepare($sql);
                 $result->bindParam(":id", $article['id'], PDO::PARAM_INT);
                 $result->bindParam(":title",$article['title']);
                 $result->bindParam(":author",$article['author']);
                 $result->bindParam(":body",$article['body']);
                 $result->bindParam(":short_content", $short_content);
-                if ($result->execute()) $errors[] = 'Статья успешно отредактирована';
+                $result->bindParam(":picture", $picture);
+                if ($result->execute()) {
+                    $errors[] = 'Статья успешно отредактирована';
+                    if(isset($file_tmp)) {
+                        move_uploaded_file($file_tmp, $picture);
+                    }
+                }
             }
 
             return $errors;
@@ -155,7 +168,8 @@ class Article extends Model {
         if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $article['author'])) $errors[] = 'Имя автора неопределенное';
         if (empty($article['body'])) $errors[] = 'Статья пустая';
         if (strlen($article['body']) < 100 && strlen($article['body']) > 10000) $errors[] = 'Статья слишком короткое или длинное';
-        if(($article['file_type'] != 'image/jpeg') && ($article['file_type'] != 'image/jpg') && ($article['file_type'] != 'image/png')) $errors[] = 'Недопустимый тип файла';
+        if (!empty($article['file_type']))
+            if(($article['file_type'] != 'image/jpeg') && ($article['file_type'] != 'image/jpg') && ($article['file_type'] != 'image/png')) $errors[] = 'Недопустимый тип файла';
         return $errors;
     }
 }

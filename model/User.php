@@ -77,6 +77,27 @@ class User extends Model {
         }
     }
 
+    public function updateUser($user) {
+
+        if (isset($user)) {
+
+            $errors = $this->updateValidation($user);
+
+            if (empty($errors)) {
+                $sql = "UPDATE users SET fname = :name, surname = :surname, login = :login, email = :email WHERE id = :id";
+                $result = $this->db->prepare($sql);
+                $result->bindParam(":id", $user['id'], PDO::PARAM_INT);
+                $result->bindParam(":login", $user['login']);
+                $result->bindParam(":email", $user['email']);
+                $result->bindParam(":name", $user['fname']);
+                $result->bindParam(":surname", $user['surname']);
+                if($result->execute()) $errors[] = 'Успешно изменено!';
+            }
+
+            return $errors;
+        }
+    }
+
     public function login($user)
     {
         if (isset($user)) {
@@ -85,7 +106,7 @@ class User extends Model {
 
             if (empty($errors)) {
 
-                $sql = "SELECT * FROM users where login = ? ";
+                $sql = "SELECT id, login, password, admin FROM users where login = ? ";
                 $sth = $this->db->prepare($sql);
                 $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
                 $sth->execute();
@@ -148,6 +169,28 @@ class User extends Model {
         if (empty($user['password'])) $errors[] = 'Пароль пустой';
         if (empty($user['password2'])) $errors[] = 'Пароль снова не введен';
         if ($user['password'] != $user['password2']) $errors[] = 'Пароль снова введен неправильный';
+
+        return $errors;
+    }
+
+    private function updateValidation($user)
+    {
+        $errors = array();
+        $sql = "SELECT login FROM users WHERE login = ? AND id != ?";
+        $sth = $this->db->prepare($sql);
+        $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
+        $sth->bindValue(2, $user['id'], PDO::PARAM_INT);
+        $sth->execute();
+        $sth->setFetchMode(PDO::FETCH_ASSOC);
+        $loginResult = $sth->fetch();
+
+        if ($loginResult) $errors[] = 'Пользователь с таким логином уже зарегистрирован';
+        if (empty($user['fname'])) $errors[] = 'Имя не введено';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['fname'])) $errors[] = 'Некорректное имя';
+        if (empty($user['surname'])) $errors[] = 'Фамилия не введена';
+        if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['surname'])) $errors[] = 'Некорректная фамилия';
+        if (empty($user['email'])) $errors[] = 'Email не введен';
+        if (empty($user['login'])) $errors[] = 'Логин не введен';
 
         return $errors;
     }
