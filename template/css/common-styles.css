@@ -193,3 +193,13 @@ a.navbar-brand:hover, a.navbar-brand:focus {
     }
 }
 /*-------------end of login form styles----------*/
+@media (min-width: 992px) {
+    .affix {
+        top: 0;
+        z-index: 9999 !important;
+    }
+
+    .affix + .container {
+        padding-top: 100px;
+    }
+}

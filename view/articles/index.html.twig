@@ -9,7 +9,7 @@
                 {% if article.picture %}
                     <p class="picture"><img src="/{{ article.picture }}" width="70%"></p>
                 {% endif %}
-                <p class="content{{ article.title }}">{{ article.short_content }}</p>
+                <p class="content{{ article.title }}">{{ article.short_content | raw }}</p>
                 <p>
                     <a class="btn btn-primary liked" id="like{{ article.id }}" article_id="{{ article.id }}" role="button"><i class="fa fa-heart"></i> <span>{{ article.like_count }}</span></a>
                     <a class="btn btn-default" role="button" href="/articles/{{ article.id }}">Читать дальше <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
