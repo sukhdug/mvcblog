@@ -7,53 +7,48 @@ class Comment extends Model {
     /**
      * Returns an array of comments items
      */
-    public function getCommentsList($article_id) {
-
-        $article_id = intval($article_id);
-        if ($article_id) {
-
-            $commentsList = array();
-            $sql = 'SELECT id, body, author FROM comments WHERE article_id=' . $article_id;
-            $result = $this->db->prepare($sql);
-            $result->execute();
-
-            $i = 0;
-            while($row = $result->fetch()) {
-                $commentsList[$i]['id'] = $row['id'];
-                $commentsList[$i]['body'] = $row['body'];
-                $commentsList[$i]['author'] = $row['author'];
-                $i++;
+    public function getCommentsList($article_id)
+    {
+        try {
+            $article_id = intval($article_id);
+            if (isset($article_id)) {
+                $sql = 'SELECT id, body, author FROM comments WHERE article_id = ' . $article_id;
+                $result = $this->db->prepare($sql);
+                $result->execute();
+                $commentsList = $result->fetchAll();
+                return $commentsList;
             }
-            return $commentsList;
+        } catch (PDOException $e) {
+            return 'Подключение не удалось: ' . $e->getMessage();
         }
     }
 
     /**
-     *
+     * Add single comment for article
      */
-    public function addCommentForArticle($comment){
-
-        if (isset($comment)) {
-
-            $errors = $this->validation($comment);
-
-            if(empty($errors)) {
-                $sql = "INSERT INTO comments (body, author, article_id) VALUES (:comment, :author, :article_id)";
-                $result = $this->db->prepare($sql);
-                $result->bindParam(":comment", $comment['comment']);
-                $result->bindParam(":author", $comment['author']);
-                $result->bindParam(":article_id", $comment['id']);
-                if($result->execute()) $errors[] = 'Комментарий добавлен!';
+    public function addCommentForArticle($comment)
+    {
+        try {
+            if (isset($comment)) {
+                $resultMessage = $this->validation($comment);
+                if(empty($resultMessage)) {
+                    $sql = "INSERT INTO comments (body, author, article_id) VALUES (:comment, :author, :article_id)";
+                    $result = $this->db->prepare($sql);
+                    $result->bindParam(":comment", $comment['comment']);
+                    $result->bindParam(":author", $comment['author']);
+                    $result->bindParam(":article_id", $comment['id']);
+                    if($result->execute()) $resultMessage[] = 'Комментарий добавлен!';
+                }
+                return $resultMessage;
             }
-
-            return $errors;
+        } catch (PDOException $e) {
+            return 'Подключение не удалось: ' . $e->getMessage();
         }
     }
 
-    public static function validation($comment) {
-
+    public static function validation($comment)
+    {
         $errors = array();
-
         if(empty($comment['author'])) $errors[] = 'Напишите автора комментария';
         if(empty($comment['comment'])) $errors[] = 'Комментарий не написан';
         if (strlen($comment['author']) < 1 && strlen($comment['author']) > 255) $errors[] = 'Имя автора слишком длинное или короткое';
@@ -61,8 +56,6 @@ class Comment extends Model {
         if (empty($comment['id'])) $errors[] = 'Статья неопределена';
         if (!is_int($comment['id'])) $errors[] = 'Статья неопределена';
         if (!preg_match('/^[a-zA-Zа-яА-Я]{4,20}$/u', $comment['author'])) $errors[] = 'Имя автора неопределенное';
-
         return $errors;
-
     }
 }
