@@ -47,7 +47,6 @@ class ArticleTest extends TestCase {
 	public function testUpdateArticle()
 	{
 		$articleArray = [
-			'id' => '23',
 			'title' => 'Test Title',
 			'author' => 'testauthor',
 			'body' => 'test body 2'

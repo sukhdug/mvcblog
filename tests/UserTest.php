@@ -32,4 +32,35 @@ class UserTest extends TestCase
         $result = $this->user->addUser($user);
         $this->assertEquals('Вы успешно зарегистрированы!', $result[0]);
     }
+
+    public function testGetUsersList()
+    {
+        $result = $this->user->getUsersList(1, 10);
+        $this->assertNotEmpty($result);
+    }
+
+    public function testGetUserByID()
+    {
+        $result = $this->user->getUserByID(1);
+        $this->assertEquals('admin', $result['login']);
+        $this->assertEquals('admin@gmail.com', $result['email']);
+        $this->assertEquals('Handy', $result['fname']);
+        $this->assertEquals('Handy', $result['surname']);
+        $this->assertEquals(1, $result['admin']);
+        $result = $this->user->getUserByID(1111);
+        $this->assertFalse($result);
+    }
+
+    public function testUpdateUser()
+    {
+        $user = [
+            'id' => 1,
+            'login' => 'admin',
+            'email' => 'admin@gmail.com',
+            'fname' => 'Handy',
+            'surname' => 'Handy'
+        ];
+        $result = $this->user->updateUser($user);
+        $this->assertEquals('Успешно изменено!', $result[0]);
+    }
 }
