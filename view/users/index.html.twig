@@ -3,32 +3,27 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {% for user in users %}
-               <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 main text-center">
-                    <ul class="list-group profile-of-user">
-                        <a href="/users/{{ user.id }}">
-                            <li class="list-group-item text-muted">Информация о пользователе
-                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i></li>
-                        </a>
-                        <li class="list-group-item text-right">
-                            <span class="pull-left">
-                                <strong>Логин</strong></span> {{ user.login }}
-                        </li>
-                        <li class="list-group-item text-right">
-                            <span class="pull-left">
-                                <strong>Имя фамилия</strong></span> {{ user.fname }} {{ user.surname }}
-                        </li>
-                        <li class="list-group-item text-right">
-                            <span class="pull-left">
-                                <strong>Эл.почта</strong></span> {{ user.email }}
-                        </li>
-                        <li class="list-group-item text-right">
-                            <a href="/users/edit/{{ user.id }}" class="btn btn-primary" type="button">редактировать</a>
-                            <a href="#" class="btn btn-danger" type="button">удалить</a>
-                        </li>
-                    </ul>
-                </div>
-            {% endfor %}
+            <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 main text-center">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Логин</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                {% for user in users %}
+                    <tbody>
+                    <tr>
+                        <td class="text-left">{{ user.login }}</td>
+                        <td class="text-left">{{ user.email }}</td>
+                        <td class="text-right">
+                            <a href="/users/{{ user.id }}" class="btn btn-default" type="button">посмотреть</a>
+                            <a href="/users/edit/{{ user.id }}" class="btn btn-default" type="button">редактировать</a></td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+            </div>
         </div>
         <div class="centered">
             {% include '/layouts/pagination.html.twig' with {

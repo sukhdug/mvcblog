@@ -5,28 +5,6 @@ require_once "Model.php";
 class Article extends Model {
 
     /**
-     * Returns single articles items with specified id
-     * @rapam integer &id
-     */
-    public function getArticlesItemByID($id)
-    {
-        try {
-            $id = intval($id);
-            if (isset($id)) {
-                $sql = 'SELECT * FROM articles WHERE id = ?';
-                $result = $this->db->prepare($sql);
-                $result->bindValue(1, $id, PDO::PARAM_INT);
-                $result->execute();
-                $result->setFetchMode(PDO::FETCH_ASSOC);
-                $articlesItem = $result->fetch();
-                return $articlesItem;
-            }
-        } catch (PDOException $e) {
-            return 'Подключение не удалось: ' . $e->getMessage();
-        }
-    }
-
-    /**
      * Returns an array of articles items
      */
     public function getArticlesList($min, $max)
@@ -46,6 +24,28 @@ class Article extends Model {
     }
 
     /**
+     * Returns single articles items with specified id
+     * @rapam integer &id
+     */
+    public function getArticlesItemByID($id)
+    {
+        try {
+            $id = intval($id);
+            if (isset($id)) {
+                $sql = 'SELECT * FROM `articles` WHERE id = ?';
+                $result = $this->db->prepare($sql);
+                $result->bindValue(1, $id, PDO::PARAM_INT);
+                $result->execute();
+                $result->setFetchMode(PDO::FETCH_ASSOC);
+                $articlesItem = $result->fetch();
+                return $articlesItem;
+            }
+        } catch (PDOException $e) {
+            return 'Подключение не удалось: ' . $e->getMessage();
+        }
+    }
+
+    /**
      * Add single articles items to database
      */
     public function insertArticle($article)
@@ -59,7 +59,7 @@ class Article extends Model {
                         $file_tmp = $article['file_tmp'];
                     }
                     $short_content = substr($article['body'], 0, 255);
-                    $sql = "INSERT INTO articles (title, author, body, short_content, picture, like_count) VALUES (:title, :author, :body, :short_content, :picture, 0)";
+                    $sql = 'INSERT INTO articles (title, author, body, short_content, picture, like_count) VALUES (:title, :author, :body, :short_content, :picture, 0)';
                     $result = $this->db->prepare($sql);
                     $result->bindParam(":title", $article['title']);
                     $result->bindParam(":author", $article['author']);
@@ -94,7 +94,7 @@ class Article extends Model {
                         $file_tmp = $article['file_tmp'];
                     }
                     $short_content = substr($article['body'], 0, 255);
-                    $sql = "UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content, picture = :picture WHERE id = :id";
+                    $sql = 'UPDATE articles SET title = :title, author = :author, body = :body, short_content = :short_content, picture = :picture WHERE id = :id';
                     $result = $this->db->prepare($sql);
                     $result->bindParam(":id", $article['id'], PDO::PARAM_INT);
                     $result->bindParam(":title",$article['title']);
@@ -122,7 +122,7 @@ class Article extends Model {
     public function deleteArticle($id)
     {
         try {
-            $sql = "DELETE FROM articles WHERE id = ?";
+            $sql = 'DELETE articles, comments FROM articles LEFT JOIN comments ON articles.id = comments.article_id WHERE articles.id = ?';
             $result = $this->db->prepare($sql);
             $result->bindParam(1, $id, PDO::PARAM_INT);
             $result = $result->execute();
@@ -135,7 +135,7 @@ class Article extends Model {
     public function countArticles()
     {
         try {
-            $sql = "SELECT COUNT(*) FROM articles";
+            $sql = 'SELECT COUNT(*) FROM articles';
             $sth = $this->db->prepare($sql);
             $sth->execute();
             $row = $sth->fetch();

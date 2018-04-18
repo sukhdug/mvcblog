@@ -15,7 +15,7 @@ class UsersController extends Controller
             $page = addslashes(strip_tags(trim($p)));
             if($page < 1) $page = 1;
         }
-        $max_elements = 5; // эта переменная хранит количество выводимых пользователей в одной странице
+        $max_elements = 10; // эта переменная хранит количество выводимых пользователей в одной странице
         $total = $userModel->countUsers(); // общее количество пользователей
         $num_pages = ceil($total / $max_elements);
         if ($page > $num_pages) $page = $num_pages;
@@ -70,6 +70,7 @@ class UsersController extends Controller
         $userModel = new User();
         $result = array();
         $id = intval($id);
+        $deleted = 0;
         $user = $userModel->getUserByID($id);
 
         if (isset($_POST['submit'])) {
@@ -81,19 +82,29 @@ class UsersController extends Controller
             $result = $userModel->updateUser($user);
         }
 
+        if (isset($_POST['delete'])) {
+            $deleteUser = $userModel->deleteUser($id);
+            if ($deleteUser) {
+                $deleted = 1;
+                $result[] = 'Пользователь удален';
+            }
+        }
+
         if ($user) {
             if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']){
                 echo $this->twig->render('/users/edit.html.twig', [
                     'user' => $user,
                     'result' => $result,
-                    'session' => $_SESSION
+                    'session' => $_SESSION,
+                    'deleted' => $deleted
                 ]);
             }
             elseif (isset($_SESSION['logged']) && ($_SESSION['logged']['id'] == $user['id'])) {
                 echo $this->twig->render('/users/edit.html.twig', [
                     'user' => $user,
                     'result' => $result,
-                    'session' => $_SESSION
+                    'session' => $_SESSION,
+                    'deleted' => $deleted
                 ]);
             }
             elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin'])

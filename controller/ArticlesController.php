@@ -52,11 +52,10 @@ class ArticlesController extends Controller{
             $result = $commentModel->addCommentForArticle($WriteComment);
         }
 
-        if ($id) {
+        if (isset($id)) {
 
             $article = $articleModel->getArticlesItemByID($id);
             $comments = $commentModel->getCommentsList($id);
-
             if ($article) {
 
                 echo $this->twig->render('/articles/view.html.twig', [

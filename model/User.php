@@ -94,6 +94,19 @@ class User extends Model {
         }
     }
 
+    public function deleteUser($id)
+    {
+        try {
+            $sql = 'DELETE FROM users WHERE id = ?';
+            $result = $this->db->prepare($sql);
+            $result->bindParam(1, $id, PDO::PARAM_INT);
+            $result = $result->execute();
+            return $result;
+        } catch (PDOException $e) {
+            return 'Подключение не удалось: ' . $e->getMessage();
+        }
+    }
+
     public function login($user)
     {
         try {
@@ -149,13 +162,18 @@ class User extends Model {
     private function registrationValidation($user)
     {
         $errors = array();
-        $sql = "SELECT login FROM users where login= ? ";
+        $sql = 'SELECT login FROM users where login = ?';
         $sth = $this->db->prepare($sql);
         $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
         $sth->execute();
-        $sth->setFetchMode(PDO::FETCH_ASSOC);
         $loginResult = $sth->fetch();
+        $sql = 'SELECT email FROM users where email = ?';
+        $sth = $this->db->prepare($sql);
+        $sth->bindValue(1, $user['email'], PDO::PARAM_STR);
+        $sth->execute();
+        $emailResult = $sth->fetch();
         if ($loginResult) $errors[] = 'Пользователь с таким логином уже зарегистрирован';
+        if ($emailResult) $errors[] = 'Пользователь с таким email-ом уже зарегистрирован';
         if (empty($user['name'])) $errors[] = 'Имя не введено';
         if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['name'])) $errors[] = 'Некорректное имя';
         if (empty($user['surname'])) $errors[] = 'Фамилия не введена';
@@ -171,14 +189,20 @@ class User extends Model {
     private function updateValidation($user)
     {
         $errors = array();
-        $sql = "SELECT login FROM users WHERE login = ? AND id != ?";
+        $sql = 'SELECT login FROM users WHERE login = ? AND id != ?';
         $sth = $this->db->prepare($sql);
         $sth->bindValue(1, $user['login'], PDO::PARAM_STR);
         $sth->bindValue(2, $user['id'], PDO::PARAM_INT);
         $sth->execute();
-        $sth->setFetchMode(PDO::FETCH_ASSOC);
         $loginResult = $sth->fetch();
+        $sql = 'SELECT email FROM users WHERE email = ? AND id != ?';
+        $sth = $this->db->prepare($sql);
+        $sth->bindValue(1, $user['email'], PDO::PARAM_STR);
+        $sth->bindValue(2, $user['id'], PDO::PARAM_INT);
+        $sth->execute();
+        $emailResult = $sth->fetch();
         if ($loginResult) $errors[] = 'Пользователь с таким логином уже зарегистрирован';
+        if ($emailResult) $errors[] = 'Пользователь с таким email-ом уже зарегистрирован';
         if (empty($user['fname'])) $errors[] = 'Имя не введено';
         if (!preg_match('/^[a-zA-Zа-яА-Я-]{4,20}$/u', $user['fname'])) $errors[] = 'Некорректное имя';
         if (empty($user['surname'])) $errors[] = 'Фамилия не введена';
