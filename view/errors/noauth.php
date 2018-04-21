@@ -10,7 +10,7 @@
             <h1 class="centered">401 (Unauthorized)</h1>
             <p class="centered">К сожалению, Вы не авторизованы! Войдите на сайт как администратор, затем вернитесь. Спасибо!</p>
             <p class="centered"><a class="btn btn-primary btn-lg" role="button" href="/">На главную</a>
-                <a class="btn btn-primary btn-lg" role="button" href="/login">Войти</a></p>
+                <a class="btn btn-primary btn-lg" role="button" href="/main/login">Войти</a></p>
         </div>
     </div>
 </div>

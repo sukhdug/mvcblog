@@ -13,6 +13,11 @@
                 <p>{{ article.body | raw }}</p>
                 <p>Author: {{ article.author }}</p>
                 <p><i class="fa fa-heart"></i> {{ article.like_count }}</p>
+                {% if session.logged and session.logged.admin %}
+                    <p><a href="/admin/articles/edit/{{ article.id }}"><button class="btn btn-primary">Редактировать</button></a>
+                        <a href="/admin/articles/delete/{{ article.id }}" class="btn btn-danger" role="button">Удалить</a>
+                    </p>
+                {% endif %}
                 <h2>Комментарии</h2>
                 {% for comment in comments %}
                     <div>

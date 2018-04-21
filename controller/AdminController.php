@@ -32,25 +32,6 @@ class AdminController extends Controller
         return true;
     }
 
-    public function actionView($id)
-    {
-        $commentModel = new Comment();
-        $articleModel = new Article();
-        $id = intval($id);
-        if ($id) {
-
-            $articlesItem = $articleModel->getArticlesItemByID($id);
-            $commentsList = $commentModel->getCommentsList($id);
-
-            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/view.php');
-            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
-            else require_once(ROOT . '/view/errors/noauth.php');
-
-        }
-
-        return true;
-    }
-
     private function pagination($page, $num_pages)
     {
         if ($page > 2) $first_page = '<li><a href="/admin/page/1"><<</a></li>';

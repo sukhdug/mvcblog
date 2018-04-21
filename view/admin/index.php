@@ -16,11 +16,11 @@
             </div>
             <?php foreach($articlesList as $articleItem){?>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h1><a href="/admin/article/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
+                    <h1><a href="/admin/articles/<?= $articleItem['id'] ?>"><?= $articleItem['title']; ?></a></h1>
                     <p>Author: <?= $articleItem['author']; ?></p>
                     <p class="content<?= $articleItem['id']; ?>"><?= $articleItem['short_content']; ?></p>
-                    <p><a class="btn btn-default" role="button" href="/admin/article/<?= $articleItem['id'] ?>">Читать <i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="/admin/article/edit/<?= $articleItem['id']; ?>" class="btn btn-default" role="button">Изменить <i class="fa fa-pencil" aria-hidden="true"></i></a></p>
+                    <p><a class="btn btn-default" role="button" href="/admin/articles/<?= $articleItem['id'] ?>">Читать <i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="/admin/articles/edit/<?= $articleItem['id']; ?>" class="btn btn-default" role="button">Изменить <i class="fa fa-pencil" aria-hidden="true"></i></a></p>
                     <p><i class="fa fa-heart"></i> <?= $articleItem['like_count']; ?></p>
                     <hr>
                 </div>
@@ -31,7 +31,7 @@
                 <?= $pagination; ?>
             </ul>
          </p>
-        <a href="/admin/article/add"><button class="btn btn-primary">Добавить статью</button></a>
+        <a href="/admin/articles/add"><button class="btn btn-primary">Добавить статью</button></a>
     </div>
     <div class="container">
         <hr>

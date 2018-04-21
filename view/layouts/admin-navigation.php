@@ -6,7 +6,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Администрирование <b class="caret"></b></a>
             <ul class="dropdown-menu navmenu-nav">
                 <li class="dropdown-header">Привет, <?= $_SESSION['logged']['login']; ?>!</li>
-                <li><a href="/admin/article/add">Добавление статьи</a></li>
+                <li><a href="/admin/articles/add">Добавление статьи</a></li>
                 <li class="divider"></li>
                 <li><a href="/logout">Выйти</a></li>
             </ul>

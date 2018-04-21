@@ -21,8 +21,8 @@
                             <li><a href="#">Популярные</a></li>
                         </ul>
                     </li>
-                    <li><a href="/about">О проекте</a></li>
-                    <li><a href="/contacts">Контакты</a></li>
+                    <li><a href="/main/about">О проекте</a></li>
+                    <li><a href="/main/contact">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if session.logged %}
@@ -33,11 +33,11 @@
                                     <li><a href="/users">Пользователи</a></li>
                                     <li><a href="/admin">Администрирование</a></li>
                                 {% endif %}
-                                <li><a href="/logout">Выйти</a></li>
+                                <li><a href="/main/logout">Выйти</a></li>
                             </ul>
                         </li>
                     {% else %}
-                        <li><a href="/login">Войти</a></li>
+                        <li><a href="/main/login">Войти</a></li>
                     {% endif %}
                 </ul>
             </div>
