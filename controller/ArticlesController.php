@@ -11,10 +11,9 @@ class ArticlesController extends Controller{
         parent::__construct();
     }
 
-    public function actionIndex($p) {
-
+    public function actionIndex($p)
+    {
         $articleModel = new Article();
-
         if(!isset($p)) $page = 1;
         else {
             $page = addslashes(strip_tags(trim($p)));
@@ -25,10 +24,7 @@ class ArticlesController extends Controller{
         $num_pages = ceil($total / $max_elements);
         if ($page > $num_pages) $page = $num_pages;
         $start = ($page - 1) * $max_elements; // Стартовая позиция выборки из БД
-
-        $articles = array();
         $articles = $articleModel->getArticlesList($start, $max_elements);
-
         echo $this->twig->render('/articles/index.html.twig', [
             'articles' => $articles,
             'currentPage' => $page,
@@ -38,8 +34,8 @@ class ArticlesController extends Controller{
         return true;
     }
 
-    public function actionView($id) {
-
+    public function actionView($id)
+    {
         $commentModel = new Comment();
         $articleModel = new Article();
         $result = array();
@@ -72,20 +68,21 @@ class ArticlesController extends Controller{
                 ]);
             }
             else {
-                require_once(ROOT . '/view/errors/noarticle.php');
+                echo $this->twig->render('/errors/article_not_found.html.twig', [
+                    'session' => $_SESSION
+                ]);
             }
         }
         return true;
     }
 
-    public function actionEdit($id) {
-
+    public function actionEdit($id)
+    {
         $articleModel = new Article();
         $id = intval($id);
         $result = array();
 
         if (isset($_POST['submit'])) {
-
             $article['title'] = $_POST['inputTitle'];
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];
@@ -97,21 +94,27 @@ class ArticlesController extends Controller{
             }
             $result = $articleModel->updateArticle($article);
         }
-
         if ($id) {
-
             $articlesItem = $articleModel->getArticlesItemByID($id);
-
-            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) {
-                echo $this->twig->render('/articles/edit.html.twig', [
-                    'article' => $articlesItem,
-                    'result' => $result,
-                    'session'   => $_SESSION
+            if (!empty($articlesItem)) {
+                if ((isset($_SESSION['logged']) && $_SESSION['logged']['admin'])) {
+                    echo $this->twig->render('/articles/edit.html.twig', [
+                        'article' => $articlesItem,
+                        'result' => $result,
+                        'session'   => $_SESSION
+                    ]);
+                }
+                elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+                else require_once(ROOT . '/view/errors/noauth.php');
+            } else {
+                echo $this->twig->render('/errors/article_not_found.html.twig', [
+                    'session' => $_SESSION
                 ]);
             }
-            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
-            else require_once(ROOT . '/view/errors/noauth.php');
-
+        } else {
+            echo $this->twig->render('/errors/page_not_found.html.twig', [
+                'session' => $_SESSION
+            ]);
         }
 
         return true;
@@ -122,23 +125,25 @@ class ArticlesController extends Controller{
         $articleModel = new Article();
         $id = intval($id);
         $result = 0;
-
         if (isset($_POST['submit'])) {
-
             $result = $articleModel->deleteArticle($id);
-
         }
-
         if ($id) {
-
             $articlesItem = $articleModel->getArticlesItemByID($id);
-
-            if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/delete.php');
-            elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
-            else require_once(ROOT . '/view/errors/noauth.php');
-
+            if (!empty($articlesItem)) {
+                if (isset($_SESSION['logged']) && $_SESSION['logged']['admin']) require_once(ROOT . '/view/admin/delete.php');
+                elseif (isset($_SESSION['logged']) && !$_SESSION['logged']['admin']) require_once(ROOT . '/view/errors/notadmin.php');
+                else require_once(ROOT . '/view/errors/noauth.php');
+            } else {
+                echo $this->twig->render('/errors/article_not_found.html.twig', [
+                    'session' => $_SESSION
+                ]);
+            }
+        } else {
+            echo $this->twig->render('/errors/page_not_found.html.twig', [
+                'session' => $_SESSION
+            ]);
         }
-
         return true;
     }
 
@@ -154,9 +159,7 @@ class ArticlesController extends Controller{
             'file_tmp' => '',
             'file_type' => ''
         ];
-
         if (isset($_POST['submit'])) {
-
             $article['title'] = $_POST['inputTitle'];
             $article['author'] = $_POST['inputAuthor'];
             $article['body'] = $_POST['inputBody'];

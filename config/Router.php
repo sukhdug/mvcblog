@@ -25,6 +25,8 @@ class Router
                 $actionName = 'actionIndex';
                 $controllerObject = new $controllerName;
                 call_user_func_array(array($controllerObject, $actionName), array());
+            } else {
+                $this->callErrorsController();
             }
         }
         if (!empty($segments)) {
@@ -37,7 +39,12 @@ class Router
                     $actionName = 'actionIndex';
                     $controllerObject = new $controllerName;
                     $parameters[] = array_shift($segments);
-                    call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    $methodExist = method_exists($controllerObject, $actionName);
+                    if ($methodExist) {
+                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    } else {
+                        $this->callErrorsController();
+                    }
                 } else if ((!empty($match)) && ($match != 'Page')) {
                     $controller = $match . 'Controller';
                     $controllerFile = ROOT . '/controller/' . $controller . '.php';
@@ -49,12 +56,24 @@ class Router
                         if (preg_match('([0-9]+)', $match)) {
                             $actionName = 'actionView';
                             $parameters[] = $match;
-                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                            $methodExist = method_exists($controllerObject, $actionName);
+                            if ($methodExist) {
+                                call_user_func_array(array($controllerObject, $actionName), $parameters);
+                            } else {
+                                $this->callErrorsController();
+                            }
                         } else {
                             $actionName = 'action' . ucfirst($match);
                             $parameters[] = array_shift($segments);
-                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                            $methodExist = method_exists($controllerObject, $actionName);
+                            if ($methodExist) {
+                                call_user_func_array(array($controllerObject, $actionName), $parameters);
+                            } else {
+                                $this->callErrorsController();
+                            }
                         }
+                    } else {
+                        $this->callErrorsController();
                     }
                 }
             }
@@ -68,22 +87,58 @@ class Router
                     if (preg_match('([0-9]+)', $match)) {
                         $actionName = 'actionView';
                         $parameters[] = $match;
-                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        $methodExist = method_exists($controllerObject, $actionName);
+                        if ($methodExist) {
+                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        } else {
+                            $this->callErrorsController();
+                        }
                     } else if (empty($match)) {
                         $actionName = 'actionIndex';
                         $parameters[] = $match;
-                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        $methodExist = method_exists($controllerObject, $actionName);
+                        if ($methodExist) {
+                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        } else {
+                            $this->callErrorsController();
+                        }
                     } else if ($match == 'page') {
                         $actionName = 'actionIndex';
                         $parameters[] = array_shift($segments);
-                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        $methodExist = method_exists($controllerObject, $actionName);
+                        if ($methodExist) {
+                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        } else {
+                            $this->callErrorsController();
+                        }
                     } else {
                         $actionName = 'action' . ucfirst($match);
                         $parameters[] = array_shift($segments);
-                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        $methodExist = method_exists($controllerObject, $actionName);
+                        if ($methodExist) {
+                            call_user_func_array(array($controllerObject, $actionName), $parameters);
+                        } else {
+                            $this->callErrorsController();
+                        }
                     }
+                } else {
+                    $this->callErrorsController();
                 }
             }
+        }
+    }
+
+    private function callErrorsController()
+    {
+        $controller = 'ErrorsController';
+        $controllerFile = ROOT . '/controller/' . $controller . '.php';
+        if (file_exists($controllerFile)) {
+            include_once($controllerFile);
+            $controllerObject = new $controller;
+            $actionName = 'actionError404';
+            call_user_func_array(array($controllerObject, $actionName), array());
+        } else {
+            die('Внутренняя ошибка сайта!');
         }
     }
 }
