@@ -16,7 +16,7 @@
                 <p><?= $articlesItem['author']; ?></p>
                 <p><?= $articlesItem['body']; ?></p>
                 <h2 class="text-center text-danger">Вы действительно хотите удалить эту статью?</h2>
-                <p class="centered"><a href="/admin/article/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Вернуться</button></a></p>
+                <p class="centered"><a href="/admin/articles/<?= $articlesItem['id'] ?>"><button class="btn btn-primary">Вернуться</button></a></p>
                 <form method="POST" class="centered">
                         <button class="btn btn-danger" type="submit" name="submit">Да, удалить</button>
                 </form>

@@ -1,18 +1,20 @@
 <?php
 
-$controller = @$_POST["controller"];
-$action = @$_POST["action"];
-$id = @$_POST['id'];
+$controller = @$_GET["controller"];
+$action = @$_GET["action"];
+$id = @$_GET['id'];
 
-if ($controller && $action && $id) {
+if ($controller && $action) {
 
-    $controller .= "Controller";
-    $controllerFile = __DIR__ . "/controller/" . $controller . ".php";
-    include($controllerFile);
-    $controllerObject = new $controller;
-    $method = "action" . $action;
-    $result = call_user_func(array($controllerObject, $method), $id);
-
+    $controller .= 'Controller';
+    $controllerFile = __DIR__ . '/controller/' . $controller . '.php';
+    if (file_exists($controllerFile)) {
+        require_once ($controllerFile);
+        $actionName = 'action' . $action;
+        $parameters = array();
+        $controllerObject = new $controller(true);
+        $controllerObject->$actionName($id);
+    }
 } else {
     die("Unknown error! Sorry :(");
 }

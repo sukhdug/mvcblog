@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // FRONT CONTROLLER
 
 // 1. Общие настройки

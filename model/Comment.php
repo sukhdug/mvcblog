@@ -4,6 +4,11 @@ require_once "Model.php";
 
 class Comment extends Model {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Returns an array of comments items
      */

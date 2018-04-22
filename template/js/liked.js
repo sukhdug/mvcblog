@@ -1,10 +1,8 @@
 jQuery(document).ready(function () {
-
     $(".liked").on("click", function () {
-
         var id = $(this).attr("article_id");
-        $.ajax({
-            type: 'post',
+        $.get({
+            type: 'GET',
             url: "ajax.php",
             dataType: 'html',
             data: {controller: 'Articles', action: 'Liked', id: id},
@@ -12,7 +10,7 @@ jQuery(document).ready(function () {
                 $("#like" + id + " > span").html(data);
             },
             error: function (e) {
-                alert("Error");
+                alert("Error" + e);
                 console.log(e);
             }
         });

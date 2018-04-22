@@ -1,10 +1,15 @@
 <?php
 
 require_once "Controller.php";
-include ROOT. '/model/Article.php';
-include ROOT. '/model/Comment.php';
+require_once ROOT. '/model/Article.php';
+require_once ROOT. '/model/Comment.php';
 
 class ArticlesController extends Controller{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function actionIndex($p) {
 
@@ -179,7 +184,10 @@ class ArticlesController extends Controller{
     }
 
     public function actionLiked($id) {
+        $articleModel = new Article(true);
         echo $id;
+        $r = $articleModel->countArticles();
+        echo $r;
         return true;
     }
 }

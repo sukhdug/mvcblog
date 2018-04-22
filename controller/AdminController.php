@@ -1,11 +1,16 @@
 <?php
 
 require_once "Controller.php";
-include_once ROOT. '/model/Article.php';
-include_once ROOT. '/model/Comment.php';
+require_once ROOT. '/model/Article.php';
+require_once ROOT. '/model/Comment.php';
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function actionIndex($p)
     {
         $articleModel = new Article();

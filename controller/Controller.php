@@ -1,6 +1,4 @@
 <?php
-
-include ROOT. '/config/session.php';
 include ROOT. '/config/twig.php';
 
 class Controller

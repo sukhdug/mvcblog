@@ -1,10 +1,15 @@
 <?php
 
 require_once "Controller.php";
-include ROOT. '/model/User.php';
+require_once ROOT. '/model/User.php';
 
 class UsersController extends Controller
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function actionIndex($p)
     {

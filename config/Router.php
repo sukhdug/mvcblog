@@ -29,21 +29,21 @@ class Router
         }
         if (!empty($segments)) {
             $controllerName = ucfirst(array_shift($segments)) . 'Controller';
-            $controllerFile = ROOT . '/controller/' . $controllerName . '.php';
             if ($controllerName == 'AdminController') {
                 $match = ucfirst(array_shift($segments));
-                if ($match == 'Page') {
+                if ($match == 'Page' || empty($match)) {
+                    $controllerFile = ROOT . '/controller/' . $controllerName . '.php';
                     include_once($controllerFile);
                     $actionName = 'actionIndex';
                     $controllerObject = new $controllerName;
                     $parameters[] = array_shift($segments);
                     call_user_func_array(array($controllerObject, $actionName), $parameters);
                 } else if ((!empty($match)) && ($match != 'Page')) {
-                    $controllerName = $match . 'Controller';
-                    $controllerFile = ROOT . '/controller/' . $controllerName . 'php';
+                    $controller = $match . 'Controller';
+                    $controllerFile = ROOT . '/controller/' . $controller . '.php';
                     if (file_exists($controllerFile)) {
                         include_once($controllerFile);
-                        $controllerObject = new $controllerName;
+                        $controllerObject = new $controller;
                         $parameters = array();
                         $match = array_shift($segments);
                         if (preg_match('([0-9]+)', $match)) {
@@ -58,27 +58,30 @@ class Router
                     }
                 }
             }
-            if (file_exists($controllerFile)) {
-                include_once($controllerFile);
-                $controllerObject = new $controllerName;
-                $parameters = array();
-                $match = array_shift($segments);
-                if (preg_match('([0-9]+)', $match)) {
-                    $actionName = 'actionView';
-                    $parameters[] = $match;
-                    call_user_func_array(array($controllerObject, $actionName), $parameters);
-                } else if (empty($match)) {
-                    $actionName = 'actionIndex';
-                    $parameters[] = $match;
-                    call_user_func_array(array($controllerObject, $actionName), $parameters);
-                } else if ($match == 'page') {
-                    $actionName = 'actionIndex';
-                    $parameters[] = array_shift($segments);
-                    call_user_func_array(array($controllerObject, $actionName), $parameters);
-                } else {
-                    $actionName = 'action' . ucfirst($match);
-                    $parameters[] = array_shift($segments);
-                    call_user_func_array(array($controllerObject, $actionName), $parameters);
+            if ($controllerName != 'AdminController') {
+                $controllerFile = ROOT . '/controller/' . $controllerName . '.php';
+                if (file_exists($controllerFile)) {
+                    include_once($controllerFile);
+                    $controllerObject = new $controllerName;
+                    $parameters = array();
+                    $match = array_shift($segments);
+                    if (preg_match('([0-9]+)', $match)) {
+                        $actionName = 'actionView';
+                        $parameters[] = $match;
+                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    } else if (empty($match)) {
+                        $actionName = 'actionIndex';
+                        $parameters[] = $match;
+                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    } else if ($match == 'page') {
+                        $actionName = 'actionIndex';
+                        $parameters[] = array_shift($segments);
+                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    } else {
+                        $actionName = 'action' . ucfirst($match);
+                        $parameters[] = array_shift($segments);
+                        call_user_func_array(array($controllerObject, $actionName), $parameters);
+                    }
                 }
             }
         }
